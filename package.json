@@ -1,11 +1,9 @@
 {
 	"types": "dist",
 	"license": "MIT",
-	"version": "1.0.0",
-	"keywords": [
-		"pg-helpers"
-	],
+	"version": "2.0.0",
 	"main": "dist/index.js",
+	"keywords": ["pg-helpers"],
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
 	"bugs": "https://github.com/olyop/pg-helpers/issues",

@@ -2,8 +2,9 @@
 	"compilerOptions": {
 		"strict": true,
 		"outDir": "dist",
-		"target": "ES2019",
+		"target": "ESNEXT",
 		"declaration": true,
+		"module": "CommonJS",
 		"noImplicitAny": true,
 		"removeComments": true,
 		"esModuleInterop": true,
