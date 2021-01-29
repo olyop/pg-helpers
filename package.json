@@ -1,9 +1,11 @@
 {
 	"types": "dist",
 	"license": "MIT",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"main": "dist/index.js",
-	"keywords": ["pg-helpers"],
+	"keywords": [
+		"pg-helpers"
+	],
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
 	"bugs": "https://github.com/olyop/pg-helpers/issues",
@@ -38,11 +40,11 @@
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
+		"pg": "^8.5.1",
 		"typescript": "^4.0.2"
 	},
 	"dependencies": {
 		"@oly_op/pipe": "^3.1.0",
-		"lodash": "^4.17.20",
-		"pg": "^8.5.1"
+		"lodash": "^4.17.20"
 	}
 }

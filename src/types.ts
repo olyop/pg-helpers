@@ -1,4 +1,4 @@
-import { Pool, PoolClient, QueryResult } from "pg"
+import type { Pool, PoolClient, QueryResult } from "pg"
 
 export type Client = Pool | PoolClient
 export type Parse<T> = (res: QueryRes) => T
