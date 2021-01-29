@@ -30,7 +30,7 @@
 		"push": "clear && git status && git add -A && git commit -m \"Update\" && git push -u origin master"
 	},
 	"devDependencies": {
-		"@oly_op/eslint-config": "^1.0.0",
+		"@oly_op/eslint-config": "^1.4.0",
 		"@types/lodash": "^4.14.168",
 		"@types/pg": "^7.14.9",
 		"@typescript-eslint/eslint-plugin": "^4.14.1",
