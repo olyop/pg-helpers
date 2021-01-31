@@ -11,11 +11,8 @@ The package exports 14 helpers which you can import individually.
 
 ## API
 
-Query helpers:
+Query function
 * `query`
-* `exists`
-* `unique`
-* `search`
 
 Result parsing helpers:
 * `parseRow`
@@ -27,3 +24,6 @@ Result parsing helpers:
 * `isResEmpty`
 * `convertToCamelCase`
 * `convertToSnakeCase`
+
+Types:
+* `type Client = Pool | PoolClient`

@@ -6,9 +6,8 @@ import { getResRows } from "./getResRows"
 import { convertToCamelCase } from "./convertToCamelCase"
 
 export const parseTable =
-	<T>(log = false) =>
-		(res: QueryRes): T[] =>
-			pipe(
-				getResRows,
-				map(convertToCamelCase<T>()),
-			)(res)
+	<T>() => (res: QueryRes): T[] =>
+		pipe(
+			getResRows,
+			map(convertToCamelCase<T>()),
+		)(res)
