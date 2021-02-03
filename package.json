@@ -3,9 +3,6 @@
 	"license": "MIT",
 	"version": "2.0.2",
 	"main": "dist/index.js",
-	"keywords": [
-		"pg-helpers"
-	],
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
 	"bugs": "https://github.com/olyop/pg-helpers/issues",
@@ -30,7 +27,7 @@
 		"push": "clear && git status && git add -A && git commit -m \"Update\" && git push -u origin master"
 	},
 	"devDependencies": {
-		"@oly_op/eslint-config": "^1.4.0",
+		"@oly_op/eslint-config": "^2.0.0",
 		"@types/lodash": "^4.14.168",
 		"@types/pg": "^7.14.9",
 		"@typescript-eslint/eslint-plugin": "^4.14.2",
