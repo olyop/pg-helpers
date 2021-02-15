@@ -1,3 +1,6 @@
+[![npm][npm]][npm-url]
+[![node][node]][node-url]
+
 # pg-helpers
 A wrapper library for the [pg](https://www.npmjs.com/package/pg) npm package.
 

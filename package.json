@@ -27,16 +27,16 @@
 		"push": "clear && git status && git add -A && git commit -m \"Update\" && git push -u origin master"
 	},
 	"devDependencies": {
-		"@oly_op/eslint-config": "^2.0.0",
+		"@oly_op/eslint-config": "^3.6.5",
 		"@types/lodash": "^4.14.168",
 		"@types/pg": "^7.14.9",
-		"@typescript-eslint/eslint-plugin": "^4.14.2",
-		"eslint": "^7.19.0",
+		"@typescript-eslint/eslint-plugin": "^4.15.0",
+		"eslint": "^7.20.0",
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-node": "^11.1.0",
-		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-promise": "^4.3.1",
 		"pg": "^8.5.1",
-		"typescript": "^4.0.2"
+		"typescript": "^4.1.5"
 	},
 	"dependencies": {
 		"@oly_op/pipe": "^3.1.0",
