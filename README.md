@@ -5,7 +5,7 @@ A wrapper library for the [pg](https://www.npmjs.com/package/pg) npm package.
 `npm install @oly_op/pg-helpers`
 
 ## Usage
-The package exports 14 helpers which you can import individually.
+The package exports helpers which you can import individually.
 
 `import {  query, parseTable } from "@oly_op/pg-helpers"`
 
@@ -27,3 +27,11 @@ Result parsing helpers:
 
 Types:
 * `type Client = Pool | PoolClient`
+* `interface Variable {
+	key: string,
+	string?: boolean,
+	parameterized?: boolean,
+	value: string | number | boolean | null,
+}`
+* `QueryRes<T = Record<string, unknown>> = QueryResult<T>`
+* `export type Parse<T> = (res: QueryRes) => T`
