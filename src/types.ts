@@ -26,5 +26,3 @@ export interface QueryInput<T> {
 }
 
 export type Parse<T> = (res: QueryRes) => T
-
-export type Query<T> = (input: string | QueryInput<T>) => Promise<T>

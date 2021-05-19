@@ -24,7 +24,7 @@ export const search =
 		columnName,
 		columnNames,
 	}: SearchInput) =>
-		query(client)()({
+		query(client)({
 			sql: SELECT_DOC_SEARCH,
 			parse: parseTable<T>(),
 			variables: [{

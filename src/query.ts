@@ -1,6 +1,6 @@
 import { uniq, isNull, identity, isString, isEmpty } from "lodash"
 
-import { Query, Client, Parse, Variable, QueryInput } from "./types"
+import { Client, Parse, Variable, QueryInput } from "./types"
 
 export const getVariableKeys = (sql: string) => {
 	const keys: string[] = []
@@ -79,29 +79,28 @@ const normalizeInput = <T>(input: string | QueryInput<T>) =>
 
 export const query =
 	(client: Client) =>
-		<T>(): Query<T> =>
-			async input => {
-				const { sql, parse, log, variables = [] } = normalizeInput(input)
-				if (log?.var) console.log(variables)
-				if (variablesAreProvided(sql, variables)) {
-					const { sqlWithValues, params } = determineSqlAndParams(sql, variables)
-					if (log?.sql) console.log(sqlWithValues)
-					try {
-						const res = await client.query(
-							sqlWithValues,
-							isEmpty(params) ? undefined : params,
-						)
-						if (log?.res) console.log(res.rows)
-						if (parse) {
-							return parse(res)
-						} else {
-							return (res as unknown) as T
-						}
-					} catch (err) {
-						if (log?.err) console.error(err)
-						throw err
+		async <T>(input: string | QueryInput<T>) => {
+			const { sql, parse, log, variables = [] } = normalizeInput(input)
+			if (log?.var) console.log(variables)
+			if (variablesAreProvided(sql, variables)) {
+				const { sqlWithValues, params } = determineSqlAndParams(sql, variables)
+				if (log?.sql) console.log(sqlWithValues)
+				try {
+					const res = await client.query(
+						sqlWithValues,
+						isEmpty(params) ? undefined : params,
+					)
+					if (log?.res) console.log(res.rows)
+					if (parse) {
+						return parse(res)
+					} else {
+						return (res as unknown) as T
 					}
-				} else {
-					throw new TypeError("Invalid query arguments")
+				} catch (err) {
+					if (log?.err) console.error(err)
+					throw err
 				}
+			} else {
+				throw new TypeError("Invalid query arguments")
 			}
+		}
