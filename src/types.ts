@@ -15,7 +15,6 @@ export interface QueryInputLog {
 	var?: boolean,
 	sql?: boolean,
 	res?: boolean,
-	err?: boolean,
 }
 
 export interface QueryInput<T> {
