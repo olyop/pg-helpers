@@ -99,10 +99,9 @@ export const query =
 				} catch (err) {
 					// eslint-disable-next-line node/no-process-env
 					if (process.env.NODE_ENV === "development") {
-						return console.error(err)
-					} else {
-						throw err
+						console.error(err)
 					}
+					throw err
 				}
 			} else {
 				throw new TypeError("Invalid query arguments")
