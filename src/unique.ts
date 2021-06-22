@@ -1,15 +1,9 @@
-import { Client } from "./types"
 import { exists } from "./exists"
+import { Client, IsUniqueOptions } from "./types"
 
 export const isUnique =
 	(client: Client) =>
-		async ({ value, table, column }: IsUniqueInput) => {
+		async ({ value, table, column }: IsUniqueOptions) => {
 			const res = await exists(client)({ table, value, column })
 			return !res
 		}
-
-export interface IsUniqueInput {
-	value: string,
-	table: string,
-	column: string,
-}

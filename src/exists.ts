@@ -1,6 +1,6 @@
 import { query } from "./query"
 import { Client } from "./types"
-import { getResExists } from "./getResExists"
+import { getResultExists } from "./get-result-exists"
 
 const EXISTS_COLUMN = `
 	SELECT EXISTS (
@@ -15,15 +15,11 @@ const EXISTS_COLUMN = `
 
 const existsQuery =
 	(client: Client) =>
-		({ table, column, value }: ExistsQueryInput) =>
+		({ table, column, value }: ExistsQueryOptions) =>
 			query(client)<boolean>({
 				sql: EXISTS_COLUMN,
-				parse: getResExists,
+				parse: getResultExists,
 				variables: [{
-					value,
-					key: "value",
-					parameterized: true,
-				},{
 					key: "table",
 					value: table,
 					string: false,
@@ -31,14 +27,23 @@ const existsQuery =
 					key: "column",
 					value: column,
 					string: false,
+				},{
+					value,
+					key: "value",
+					parameterized: true,
 				}],
 			})
 
 export const exists =
 	(client: Client) =>
-		async ({ value, ...input }: ExistsInput) => {
+		async ({ value, ...input }: ExistsOptions) => {
 			if (Array.isArray(value)) {
-				const queries = value.map(val => existsQuery(client)({ ...input, value: val }))
+				const queries = value.map(val => (
+					existsQuery(client)({
+						...input,
+						value: val,
+					})
+				))
 				const res = await Promise.all(queries)
 				return res.every(Boolean)
 			} else {
@@ -46,12 +51,15 @@ export const exists =
 			}
 		}
 
-export interface ExistsInput {
+interface ExistsOptionsBase {
 	table: string,
 	column: string,
-	value: string | string[],
 }
 
-interface ExistsQueryInput extends ExistsInput {
+interface ExistsQueryOptions extends ExistsOptionsBase {
 	value: string,
+}
+
+export interface ExistsOptions extends ExistsOptionsBase {
+	value: string | string[],
 }

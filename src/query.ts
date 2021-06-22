@@ -1,45 +1,47 @@
 import { uniq, isNull, identity, isString, isEmpty } from "lodash"
 
-import { Client, Parse, Variable, QueryInput } from "./types"
+import { Client, Parse, Variable, QueryOptions } from "./types"
 
-export const getVariableKeys = (sql: string) => {
-	const keys: string[] = []
+export const getVariableKeys =
+	(sql: string) => {
+		const keys: string[] = []
 
-	// scan flags
-	let inCurly = false
-	let tempKey = ""
-	let inVariable = false
+		// scan flags
+		let inCurly = false
+		let tempKey = ""
+		let inVariable = false
 
-	// scan sql
-	for (const char of sql) {
-		if (inVariable) {
-			if (char === " ") {
-				keys.push(tempKey)
-				inVariable = false
-				tempKey = ""
-			} else {
-				tempKey += char
+		// scan sql
+		for (const char of sql) {
+			if (inVariable) {
+				if (char === " ") {
+					keys.push(tempKey)
+					inVariable = false
+					tempKey = ""
+				} else {
+					tempKey += char
+				}
+			} else if (inCurly) {
+				if (char === " ") {
+					inVariable = true
+				} else if (char === "}") {
+					inCurly = false
+				}
+			} else if (char === "{") {
+				inCurly = true
 			}
-		} else if (inCurly) {
-			if (char === " ") {
-				inVariable = true
-			} else if (char === "}") {
-				inCurly = false
-			}
-		} else if (char === "{") {
-			inCurly = true
 		}
+
+		return uniq(keys)
 	}
 
-	return uniq(keys)
-}
-
-const variablesAreProvided = (sql: string, variables: Variable[]) => {
-	const keys = getVariableKeys(sql)
-	return variables
-		.map(({ key, value }) => keys.includes(key) && value !== undefined)
-		.every(Boolean)
-}
+const variablesAreProvided =
+	(sql: string, variables: Variable[]) => {
+		const keys = getVariableKeys(sql)
+		return variables
+			.map(({ key, value }) => keys.includes(key) && value !== undefined)
+			.every(Boolean)
+	}
 
 const determineReplaceValue =
 	(params: string[]) =>
@@ -55,10 +57,10 @@ const determineReplaceValue =
 			}
 		}
 
-const determineSqlAndParams =
+const determineSQLAndParams =
 	(sql: string, variables: Variable[]) => {
 		const params: string[] = []
-		const sqlWithValues = variables.reduce(
+		const SQLWithValues = variables.reduce(
 			(query, variable) => query.replace(
 				new RegExp(`{{ ${variable.key} }}`, "gi"),
 				determineReplaceValue(params)(variable),
@@ -67,34 +69,40 @@ const determineSqlAndParams =
 		)
 		return {
 			params,
-			sqlWithValues,
+			SQLWithValues,
 		}
 	}
 
-const normalizeInput = <T>(input: string | QueryInput<T>) =>
-	(isString(input) ? {
-		sql: input,
-		parse: identity as Parse<T>,
-	} as QueryInput<T> : input)
+const normalizeInput =
+	<T>(input: string | QueryOptions<T>) =>
+		(isString(input) ? {
+			sql: input,
+			parse: identity as Parse<T>,
+		} as QueryOptions<T> : input)
 
 export const query =
 	(client: Client) =>
-		async <T>(input: string | QueryInput<T>) => {
+		async <T>(input: string | QueryOptions<T>) => {
 			const { sql, parse, log, variables = [] } = normalizeInput(input)
 			if (log?.var) console.log(variables)
 			if (variablesAreProvided(sql, variables)) {
-				const { sqlWithValues, params } = determineSqlAndParams(sql, variables)
-				if (log?.sql) console.log(sqlWithValues)
+				const { SQLWithValues, params } =
+					determineSQLAndParams(sql, variables)
+				if (log?.sql) {
+					console.log(SQLWithValues)
+				}
 				try {
-					const res = await client.query(
-						sqlWithValues,
+					const result = await client.query(
+						SQLWithValues,
 						isEmpty(params) ? undefined : params,
 					)
-					if (log?.res) console.log(res.rows)
+					if (log?.res) {
+						console.log(result.rows)
+					}
 					if (parse) {
-						return parse(res)
+						return parse(result)
 					} else {
-						return (res as unknown) as T
+						return (result as unknown) as T
 					}
 				} catch (err) {
 					// eslint-disable-next-line node/no-process-env

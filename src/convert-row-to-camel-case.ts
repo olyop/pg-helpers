@@ -1,9 +1,11 @@
 import { mapKeys, camelCase } from "lodash"
 
-export const convertToCamelCase =
+import { Row } from "./types"
+
+export const convertRowToCamelCase =
 	<T>() =>
-		(obj: Record<string, unknown>) =>
-			(mapKeys(obj, (_, key: string) => {
+		(object: Row) =>
+			(mapKeys(object, (_, key: string) => {
 				const value = camelCase(key)
 				if (value.includes("Id")) {
 					return value.replace(/Id/gi, "ID")

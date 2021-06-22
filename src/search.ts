@@ -1,15 +1,15 @@
 import { join } from "./join"
 import { query } from "./query"
-import { Client } from "./types"
-import { parseTable } from "./parseTable"
+import { Client, SearchOptions } from "./types"
+import { convertTableToCamelCase } from "./convert-table-to-camel-case"
 
-const SELECT_DOC_SEARCH = `
+const SQL = `
 	SELECT
 		{{ columnNames }}
 	FROM
 		{{ tableName }}
 	WHERE
-		{{ columnName }} {{ sqlSearchType }} {{ query }}
+		{{ columnName }} {{ searchType }} {{ query }}
 	ORDER BY
 		{{ columnName }} ASC
 	LIMIT
@@ -23,41 +23,33 @@ export const search =
 		tableName,
 		columnName,
 		columnNames,
-	}: SearchInput) =>
+	}: SearchOptions) =>
 		query(client)({
-			sql: SELECT_DOC_SEARCH,
-			parse: parseTable<T>(),
+			sql: SQL,
+			parse: convertTableToCamelCase<T>(),
 			variables: [{
 				string: false,
 				key: "tableName",
 				value: tableName,
+			},{
+				string: false,
+				key: "columnNames",
+				value: join(columnNames),
 			},{
 				key: "limit",
 				string: false,
 				value: exact ? "1" : "10",
 			},{
 				string: false,
-				key: "columnNames",
-				value: join(columnNames),
-			},{
-				string: false,
-				key: "sqlSearchType",
+				key: "searchType",
 				value: exact ? "=" : "LIKE",
-			},{
-				string: false,
-				key: "columnName",
-				value: exact ? columnName : `lower(${columnName})`,
 			},{
 				key: "query",
 				parameterized: true,
 				value: exact ? value : `%${value.toLowerCase()}%`,
+			},{
+				string: false,
+				key: "columnName",
+				value: exact ? columnName : `lower(${columnName})`,
 			}],
 		})
-
-export interface SearchInput {
-	value: string,
-	exact: boolean,
-	tableName: string,
-	columnName: string,
-	columnNames: string[],
-}

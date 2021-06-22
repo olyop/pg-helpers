@@ -1,7 +1,7 @@
 {
 	"types": "dist",
 	"license": "MIT",
-	"version": "2.4.0",
+	"version": "3.0.0",
 	"main": "dist/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -27,19 +27,19 @@
 		"push": "clear && git status && git add -A && git commit -m \"Update\" && git push -u origin master"
 	},
 	"devDependencies": {
-		"@oly_op/eslint-config": "^3.7.9",
-		"@types/lodash": "^4.14.170",
+		"@oly_op/eslint-config": "3.7.9",
+		"@types/lodash": "4.14.170",
 		"@types/pg": "8.6.0",
-		"@typescript-eslint/eslint-plugin": "4.26.1",
-		"eslint": "7.28.0",
+		"@typescript-eslint/eslint-plugin": "4.28.0",
+		"eslint": "7.29.0",
 		"eslint-plugin-import": "2.23.4",
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "5.1.0",
-		"typescript": "^4.3.2"
+		"typescript": "4.3.4"
 	},
 	"dependencies": {
 		"@oly_op/pipe": "3.1.0",
-		"lodash": "^4.17.21",
-		"pg": "^8.6.0"
+		"lodash": "4.17.21",
+		"pg": "8.6.0"
 	}
 }
