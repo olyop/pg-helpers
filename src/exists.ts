@@ -16,8 +16,7 @@ const EXISTS_COLUMN = `
 const existsQuery =
 	(client: Client) =>
 		({ table, column, value }: ExistsQueryOptions) =>
-			query(client)<boolean>({
-				sql: EXISTS_COLUMN,
+			query(client)(EXISTS_COLUMN)<boolean>({
 				parse: getResultExists,
 				variables: [{
 					key: "table",

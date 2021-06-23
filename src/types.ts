@@ -37,7 +37,6 @@ export interface QueryOptionsLog {
 }
 
 export interface QueryOptions<T> {
-	sql: string,
 	parse?: Parse<T>,
 	log?: QueryOptionsLog,
 	variables?: Variable[],

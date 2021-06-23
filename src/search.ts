@@ -24,8 +24,7 @@ export const search =
 		columnName,
 		columnNames,
 	}: SearchOptions) =>
-		query(client)({
-			sql: SQL,
+		query(client)(SQL)({
 			parse: convertTableToCamelCase<T>(),
 			variables: [{
 				string: false,
