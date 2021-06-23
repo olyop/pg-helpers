@@ -81,8 +81,8 @@ const normalizeInput =
 		} as QueryOptions<T> : input)
 
 export const query =
-	(client: Client) => (sql: string) =>
-		async <T>(input: string | QueryOptions<T>) => {
+	(client: Client) => <T>(sql: string) =>
+		async (input: string | QueryOptions<T>) => {
 			const { parse, log, variables = [] } = normalizeInput(input)
 			if (log?.var) console.log(variables)
 			if (variablesAreProvided(sql, variables)) {
