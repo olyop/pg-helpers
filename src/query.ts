@@ -1,6 +1,19 @@
-import { uniq, isNull, identity, isEmpty, isArray } from "lodash"
+import {
+	uniq,
+	isNull,
+	isEmpty,
+	isArray,
+	identity,
+	isUndefined,
+} from "lodash"
 
-import { Client, Parse, Variable, QueryOptions, QueryInput } from "./types"
+import {
+	Parse,
+	Client,
+	Variable,
+	QueryOptions,
+	VariableInput,
+} from "./types"
 
 export const getVariableKeys =
 	(sql: string) => {
@@ -74,21 +87,34 @@ const determineSQLAndParams =
 	}
 
 const normalizeInput =
-	<T>(input: QueryInput<T>): QueryOptions<T> =>
-		(isArray(input) ? {
-			variables: input,
+	<T>(input?: QueryOptions<T>) =>
+		(isUndefined(input) ? {
 			parse: identity as Parse<T>,
 		} : input)
+
+const normalizeVariables =
+	(variables?: VariableInput) => (
+		isUndefined(variables) ?
+			[] : (
+				isArray(variables) ?
+					variables :
+					Object
+						.entries(variables)
+						.map<Variable>(({ 0: key, 1: value }) => ({ key, value }))
+			)
+	)
 
 export const query =
 	(client: Client) =>
 		(sql: string) =>
-			async <T>(input: QueryInput<T>) => {
-				const { parse, log, variables = [] } = normalizeInput(input)
+			async <T>(input?: QueryOptions<T>) => {
+				const normalizedInput = normalizeInput(input)
+				const { log, parse, variables } = normalizedInput
+				const normalizedVariables = normalizeVariables(variables)
 				if (log?.var) console.log(variables)
-				if (variablesAreProvided(sql, variables)) {
+				if (variablesAreProvided(sql, normalizedVariables)) {
 					const { SQLWithValues, params } =
-						determineSQLAndParams(sql, variables)
+						determineSQLAndParams(sql, normalizedVariables)
 					if (log?.sql) {
 						console.log(SQLWithValues)
 					}

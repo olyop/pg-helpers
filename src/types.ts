@@ -39,14 +39,16 @@ export interface QueryOptionsLog {
 export interface QueryOptions<T> {
 	parse?: Parse<T>,
 	log?: QueryOptionsLog,
-	variables?: Variable[],
+	variables?: VariableInput,
 }
 
 export interface Variable {
 	key: string,
 	string?: boolean,
+	value: VariableType,
 	parameterized?: boolean,
-	value: string | number | boolean | null,
 }
 
-export type QueryInput<T> = Variable[] | QueryOptions<T>
+export type VariableType = string | number | boolean | null
+
+export type VariableInput = Variable[] | Record<string, VariableType>
