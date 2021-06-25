@@ -1,6 +1,6 @@
-import { uniq, isNull, identity, isString, isEmpty } from "lodash"
+import { uniq, isNull, identity, isEmpty, isArray } from "lodash"
 
-import { Client, Parse, Variable, QueryOptions } from "./types"
+import { Client, Parse, Variable, QueryOptions, QueryInput } from "./types"
 
 export const getVariableKeys =
 	(sql: string) => {
@@ -74,44 +74,45 @@ const determineSQLAndParams =
 	}
 
 const normalizeInput =
-	<T>(input: string | QueryOptions<T>) =>
-		(isString(input) ? {
-			sql: input,
+	<T>(input: QueryInput<T>): QueryOptions<T> =>
+		(isArray(input) ? {
+			variables: input,
 			parse: identity as Parse<T>,
-		} as QueryOptions<T> : input)
+		} : input)
 
 export const query =
-	(client: Client) => (sql: string) =>
-		async <T>(input: string | QueryOptions<T>) => {
-			const { parse, log, variables = [] } = normalizeInput(input)
-			if (log?.var) console.log(variables)
-			if (variablesAreProvided(sql, variables)) {
-				const { SQLWithValues, params } =
-					determineSQLAndParams(sql, variables)
-				if (log?.sql) {
-					console.log(SQLWithValues)
+	(client: Client) =>
+		(sql: string) =>
+			async <T>(input: QueryInput<T>) => {
+				const { parse, log, variables = [] } = normalizeInput(input)
+				if (log?.var) console.log(variables)
+				if (variablesAreProvided(sql, variables)) {
+					const { SQLWithValues, params } =
+						determineSQLAndParams(sql, variables)
+					if (log?.sql) {
+						console.log(SQLWithValues)
+					}
+					try {
+						const result = await client.query(
+							SQLWithValues,
+							isEmpty(params) ? undefined : params,
+						)
+						if (log?.res) {
+							console.log(result.rows)
+						}
+						if (parse) {
+							return parse(result)
+						} else {
+							return (result as unknown) as T
+						}
+					} catch (err) {
+						// eslint-disable-next-line node/no-process-env
+						if (process.env.NODE_ENV === "development") {
+							console.error(err)
+						}
+						throw err
+					}
+				} else {
+					throw new TypeError("Invalid query arguments")
 				}
-				try {
-					const result = await client.query(
-						SQLWithValues,
-						isEmpty(params) ? undefined : params,
-					)
-					if (log?.res) {
-						console.log(result.rows)
-					}
-					if (parse) {
-						return parse(result)
-					} else {
-						return (result as unknown) as T
-					}
-				} catch (err) {
-					// eslint-disable-next-line node/no-process-env
-					if (process.env.NODE_ENV === "development") {
-						console.error(err)
-					}
-					throw err
-				}
-			} else {
-				throw new TypeError("Invalid query arguments")
 			}
-		}

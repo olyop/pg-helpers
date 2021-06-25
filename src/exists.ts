@@ -2,21 +2,19 @@ import { query } from "./query"
 import { Client } from "./types"
 import { getResultExists } from "./get-result-exists"
 
-const EXISTS_COLUMN = `
-	SELECT EXISTS (
-		SELECT
-			*
-		FROM
-			{{ table }}
-		WHERE
-			{{ column }} = {{ value }}
-	);
-`
-
 const existsQuery =
 	(client: Client) =>
 		({ table, column, value }: ExistsQueryOptions) =>
-			query(client)(EXISTS_COLUMN)<boolean>({
+			query(client)(`
+				SELECT EXISTS (
+					SELECT
+						*
+					FROM
+						{{ table }}
+					WHERE
+						{{ column }} = {{ value }}
+				);
+		`)({
 				parse: getResultExists,
 				variables: [{
 					key: "table",

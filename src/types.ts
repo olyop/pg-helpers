@@ -48,3 +48,5 @@ export interface Variable {
 	parameterized?: boolean,
 	value: string | number | boolean | null,
 }
+
+export type QueryInput<T> = Variable[] | QueryOptions<T>
