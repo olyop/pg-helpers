@@ -1,7 +1,7 @@
 {
 	"types": "dist",
 	"license": "MIT",
-	"version": "4.1.0",
+	"version": "5.0.0",
 	"main": "dist/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -30,7 +30,7 @@
 		"@oly_op/eslint-config": "3.7.12",
 		"@types/lodash": "4.14.170",
 		"@types/pg": "8.6.0",
-		"@typescript-eslint/eslint-plugin": "4.28.0",
+		"@typescript-eslint/eslint-plugin": "4.28.1",
 		"eslint": "7.29.0",
 		"eslint-plugin-import": "2.23.4",
 		"eslint-plugin-node": "11.1.0",

@@ -1,3 +1,5 @@
+export * from "pg"
+
 export * from "./join"
 export * from "./types"
 export * from "./query"

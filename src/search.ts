@@ -1,45 +1,47 @@
 import { join } from "./join"
 import { query } from "./query"
-import { Client, SearchOptions } from "./types"
+import { PoolOrClient } from "./types"
 import { convertTableToCamelCase } from "./convert-table-to-camel-case"
 
-const SQL = `
-	SELECT
-		{{ columnNames }}
-	FROM
-		{{ tableName }}
-	WHERE
-		{{ columnName }} {{ searchType }} {{ query }}
-	ORDER BY
-		{{ columnName }} ASC
-	LIMIT
-		{{ limit }};
-`
+export interface SearchOptions {
+	value: string,
+	exact: boolean,
+	tableName: string,
+	columnName: string,
+	columnNames: string[],
+}
 
 export const search =
-	(client: Client) => <T>({
+	(client: PoolOrClient) => <T>({
 		value,
 		exact,
 		tableName,
 		columnName,
 		columnNames,
 	}: SearchOptions) =>
-		query(client)(SQL)({
+		query(client)(`
+			SELECT
+				{{ columnNames }}
+			FROM
+				{{ tableName }}
+			WHERE
+				{{ columnName }} {{ searchType }} {{ query }}
+			ORDER BY
+				{{ columnName }} ASC
+			LIMIT
+				{{ limit }};
+	`)({
 			parse: convertTableToCamelCase<T>(),
 			variables: [{
-				string: false,
 				key: "tableName",
 				value: tableName,
 			},{
-				string: false,
 				key: "columnNames",
 				value: join(columnNames),
 			},{
 				key: "limit",
-				string: false,
 				value: exact ? "1" : "10",
 			},{
-				string: false,
 				key: "searchType",
 				value: exact ? "=" : "LIKE",
 			},{
@@ -47,7 +49,6 @@ export const search =
 				parameterized: true,
 				value: exact ? value : `%${value.toLowerCase()}%`,
 			},{
-				string: false,
 				key: "columnName",
 				value: exact ? columnName : `lower(${columnName})`,
 			}],

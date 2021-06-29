@@ -1,9 +1,9 @@
 import { query } from "./query"
-import { Client } from "./types"
+import { PoolOrClient } from "./types"
 import { getResultExists } from "./get-result-exists"
 
 const existsQuery =
-	(client: Client) =>
+	(client: PoolOrClient) =>
 		({ table, column, value }: ExistsQueryOptions) =>
 			query(client)(`
 				SELECT EXISTS (
@@ -19,11 +19,9 @@ const existsQuery =
 				variables: [{
 					key: "table",
 					value: table,
-					string: false,
 				},{
 					key: "column",
 					value: column,
-					string: false,
 				},{
 					value,
 					key: "value",
@@ -31,8 +29,21 @@ const existsQuery =
 				}],
 			})
 
+interface ExistsOptionsBase {
+	table: string,
+	column: string,
+}
+
+interface ExistsQueryOptions extends ExistsOptionsBase {
+	value: string,
+}
+
+export interface ExistsOptions extends ExistsOptionsBase {
+	value: string | string[],
+}
+
 export const exists =
-	(client: Client) =>
+	(client: PoolOrClient) =>
 		async ({ value, ...input }: ExistsOptions) => {
 			if (Array.isArray(value)) {
 				const queries = value.map(val => (
@@ -47,16 +58,3 @@ export const exists =
 				return existsQuery(client)({ ...input, value })
 			}
 		}
-
-interface ExistsOptionsBase {
-	table: string,
-	column: string,
-}
-
-interface ExistsQueryOptions extends ExistsOptionsBase {
-	value: string,
-}
-
-export interface ExistsOptions extends ExistsOptionsBase {
-	value: string | string[],
-}
