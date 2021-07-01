@@ -5,7 +5,8 @@ import { Variable } from "./types"
 const determineReplaceValue =
 	(params: string[]) =>
 		({ value, parameterized = false }: Variable) => {
-			const val = isNull(value) ? "null" : value.toString()
+			const val = isNull(value) ?
+				"NULL" : value.toString()
 			if (parameterized) {
 				params.push(val)
 				return `$${params.length}`

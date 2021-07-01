@@ -1,7 +1,7 @@
 {
 	"types": "dist",
 	"license": "MIT",
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"main": "dist/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -35,7 +35,7 @@
 		"eslint-plugin-import": "2.23.4",
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "5.1.0",
-		"typescript": "4.3.4"
+		"typescript": "4.3.5"
 	},
 	"dependencies": {
 		"@oly_op/pipe": "3.1.0",
