@@ -1,7 +1,7 @@
 {
 	"types": "dist",
 	"license": "MIT",
-	"version": "5.0.2",
+	"version": "5.1.0",
 	"main": "dist/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
