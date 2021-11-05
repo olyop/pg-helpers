@@ -1,5 +1,4 @@
 export const join =
-	(names: string[], prefix?: string, filter?: string) =>
+	<T>(names: T[], prefix?: string) =>
 		(prefix === undefined ? "" : `${prefix}.`) +
-		names.filter(column => (filter === undefined ? true : column !== filter))
-				 .join(prefix === undefined ? ", " : `, ${prefix}.`)
+		names.join(prefix === undefined ? ", " : `, ${prefix}.`)
