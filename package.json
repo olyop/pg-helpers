@@ -1,8 +1,8 @@
 {
-	"types": "dist",
+	"types": "build",
 	"license": "MIT",
 	"version": "5.1.0",
-	"main": "dist/index.js",
+	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
 	"bugs": "https://github.com/olyop/pg-helpers/issues",
@@ -16,30 +16,40 @@
 		"url": "https://github.com/olyop/pg-helpers.git"
 	},
 	"files": [
-		"dist"
+		"build"
 	],
 	"scripts": {
 		"build": "npx tsc",
 		"postpublish": "npm run push",
-		"delete-build": "rm -r -f dist",
+		"delete-build": "rm -r -f build",
 		"prepublishOnly": "npm run delete-build && npm run build",
 		"sync": "git checkout . && git remote update && git pull",
 		"push": "clear && git status && git add -A && git commit -m \"Update\" && git push -u origin master"
 	},
 	"devDependencies": {
-		"@oly_op/eslint-config": "3.7.14",
-		"@types/lodash": "4.14.172",
+		"@oly_op/eslint-config": "5.0.4",
+		"@oly_op/tsconfig": "1.0.5",
+		"@types/lodash": "4.14.176",
 		"@types/pg": "8.6.1",
-		"@typescript-eslint/eslint-plugin": "4.30.0",
+		"@typescript-eslint/eslint-plugin": "5.3.0",
+		"@typescript-eslint/parser": "5.3.0",
 		"eslint": "7.32.0",
-		"eslint-plugin-import": "2.24.2",
+		"eslint-config-airbnb": "18.2.1",
+		"eslint-config-airbnb-typescript": "14.0.1",
+		"eslint-plugin-import": "2.25.2",
+		"eslint-plugin-jsx-a11y": "6.4.1",
 		"eslint-plugin-node": "11.1.0",
-		"eslint-plugin-promise": "5.1.0",
-		"typescript": "4.4.2"
+		"eslint-plugin-promise": "5.1.1",
+		"eslint-plugin-react": "7.26.1",
+		"eslint-plugin-react-hooks": "4.2.0",
+		"typescript": "4.4.4"
+	},
+	"peerDependencies": {
+		"pg": "8"
 	},
 	"dependencies": {
 		"@oly_op/pipe": "3.1.0",
 		"lodash": "4.17.21",
-		"pg": "8.7.1"
+		"pg": "8"
 	}
 }
