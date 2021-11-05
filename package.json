@@ -1,7 +1,7 @@
 {
 	"types": "build",
 	"license": "MIT",
-	"version": "5.3.0",
+	"version": "5.4.0",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
