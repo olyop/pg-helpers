@@ -1,7 +1,7 @@
 {
 	"types": "build",
 	"license": "MIT",
-	"version": "5.5.0",
+	"version": "5.5.1",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -24,17 +24,17 @@
 		"delete-build": "rm -r -f build",
 		"prepublishOnly": "npm run delete-build && npm run build",
 		"sync": "git checkout . && git remote update && git pull",
-		"push": "clear && git status && git add -A && git commit -m \"Update\" && git push -u origin master"
+		"push": "git add -A && git commit -m \"Update\" && git push"
 	},
 	"devDependencies": {
 		"@oly_op/eslint-config": "5.1.3",
 		"@oly_op/tsconfig": "1.0.5",
-		"@types/lodash": "4.14.176",
+		"@types/lodash": "4.14.177",
 		"@types/pg": "8.6.1",
-		"@types/react": "17.0.34",
+		"@types/react": "17.0.35",
 		"@types/react-dom": "17.0.11",
-		"@typescript-eslint/eslint-plugin": "5.3.1",
-		"@typescript-eslint/parser": "5.3.1",
+		"@typescript-eslint/eslint-plugin": "5.4.0",
+		"@typescript-eslint/parser": "5.4.0",
 		"eslint": "8.2.0",
 		"eslint-config-airbnb": "19.0.0",
 		"eslint-config-airbnb-typescript": "15.0.0",
@@ -44,6 +44,7 @@
 		"eslint-plugin-promise": "5.1.1",
 		"eslint-plugin-react": "7.27.0",
 		"eslint-plugin-react-hooks": "4.3.0",
+		"pg": "8.7.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"typescript": "4.4.4"
@@ -53,7 +54,6 @@
 	},
 	"dependencies": {
 		"@oly_op/pipe": "3.1.0",
-		"lodash": "4.17.21",
-		"pg": "8"
+		"lodash": "4.17.21"
 	}
 }
