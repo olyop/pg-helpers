@@ -1,10 +1,10 @@
-import { query } from "./query"
 import { PoolOrClient } from "./types"
+import { query, QueryOptionsLog } from "./query"
 import { getResultExists } from "./get-result-exists"
 
 const existsQuery =
 	(client: PoolOrClient) =>
-		({ table, column, value }: ExistsQueryOptions) =>
+		({ log, table, column, value }: ExistsQueryOptions) =>
 			query(client)(`
 				SELECT EXISTS (
 					SELECT
@@ -15,6 +15,7 @@ const existsQuery =
 						{{ column }} = {{ value }}
 				);
 		`)({
+				log,
 				parse: getResultExists,
 				variables: [{
 					key: "table",
@@ -32,6 +33,7 @@ const existsQuery =
 interface ExistsOptionsBase {
 	table: string,
 	column: string,
+	log?: QueryOptionsLog,
 }
 
 interface ExistsQueryOptions extends ExistsOptionsBase {

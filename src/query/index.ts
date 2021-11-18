@@ -26,7 +26,7 @@ export const query =
 						console.log(SQLWithValues)
 					}
 					try {
-						const result = await client.query(
+						const result = await client.query<Record<string, unknown>>(
 							SQLWithValues,
 							isEmpty(params) ? undefined : params,
 						)
@@ -39,7 +39,6 @@ export const query =
 							return (result as unknown) as T
 						}
 					} catch (err) {
-						// eslint-disable-next-line node/no-process-env
 						if (process.env.NODE_ENV === "development") {
 							console.error(err)
 						}
