@@ -1,4 +1,4 @@
-import { head } from "lodash"
+import { head } from "lodash-es"
 
 import { Result } from "./types"
 import { getResultRows } from "./get-result-rows"
