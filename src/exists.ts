@@ -30,7 +30,17 @@ const existsQuery =
 			query(pg)(SELECT_EXISTS)({
 				log,
 				parse: getResultExists,
-				variables: { table, column, value },
+				variables: [{
+					key: "table",
+					value: table,
+				},{
+					key: "column",
+					value: column,
+				},{
+					value,
+					key: "value",
+					parameterized: true,
+				}],
 			})
 
 export interface ExistsOptions extends ExistsOptionsBase {
