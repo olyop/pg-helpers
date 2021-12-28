@@ -1,4 +1,4 @@
-import { isArray } from "lodash"
+import { isArray } from "lodash-es"
 
 import { PoolOrClient } from "./types"
 import { query, QueryOptionsLog } from "./query"

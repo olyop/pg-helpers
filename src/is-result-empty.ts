@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash"
+import { isEmpty } from "lodash-es"
 
 import { Result } from "./types"
 import { getResultRows } from "./get-result-rows"

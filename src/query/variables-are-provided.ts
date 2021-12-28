@@ -1,4 +1,4 @@
-import { isUndefined } from "lodash"
+import { isUndefined } from "lodash-es"
 
 import { Variable } from "./types"
 import getVariableKeys from "./get-variable-keys"

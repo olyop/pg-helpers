@@ -1,4 +1,4 @@
-import { mapKeys, camelCase } from "lodash"
+import { mapKeys, camelCase } from "lodash-es"
 
 import { Row } from "./types"
 

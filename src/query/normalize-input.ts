@@ -1,4 +1,4 @@
-import { identity, isArray, isUndefined } from "lodash"
+import { identity, isArray, isUndefined } from "lodash-es"
 
 import { Parse, QueryOptions, QueryOptionsNormalized } from "./types"
 
