@@ -8,8 +8,8 @@ export interface IsUniqueOptions {
 }
 
 export const isUnique =
-	(client: PoolOrClient) =>
+	(pg: PoolOrClient) =>
 		async ({ value, table, column }: IsUniqueOptions) => {
-			const res = await exists(client)({ table, value, column })
+			const res = await exists(pg)({ table, value, column })
 			return !res
 		}

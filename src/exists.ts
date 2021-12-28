@@ -13,32 +13,24 @@ interface ExistsQueryOptions extends ExistsOptionsBase {
 	value: string,
 }
 
+const SELECT_EXISTS = `
+	SELECT EXISTS (
+		SELECT
+			*
+		FROM
+			{{ table }}
+		WHERE
+			{{ column }} = {{ value }}
+	);
+`
+
 const existsQuery =
-	(client: PoolOrClient) =>
+	(pg: PoolOrClient) =>
 		({ log, table, column, value }: ExistsQueryOptions) =>
-			query(client)(`
-				SELECT EXISTS (
-					SELECT
-						*
-					FROM
-						{{ table }}
-					WHERE
-						{{ column }} = {{ value }}
-				);
-		`)({
+			query(pg)(SELECT_EXISTS)({
 				log,
 				parse: getResultExists,
-				variables: [{
-					key: "table",
-					value: table,
-				},{
-					key: "column",
-					value: column,
-				},{
-					value,
-					key: "value",
-					parameterized: true,
-				}],
+				variables: { table, column, value },
 			})
 
 export interface ExistsOptions extends ExistsOptionsBase {

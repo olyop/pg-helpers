@@ -9,7 +9,7 @@ import determineSQLAndParams from "./determine-sql-and-params"
 export * from "./types"
 
 export const query =
-	(client: PoolOrClient) =>
+	(pg: PoolOrClient) =>
 		(sql: string) =>
 			async <T>(input?: QueryOptions<T>) => {
 				const { log, parse, variables } =
@@ -24,10 +24,11 @@ export const query =
 					if (log?.sql) console.log(sqlWithValues)
 
 					try {
-						const result = await client.query<Record<string, unknown>>(
-							sqlWithValues,
-							isEmpty(params) ? undefined : params,
-						)
+						const result =
+							await pg.query<Record<string, unknown>>(
+								sqlWithValues,
+								isEmpty(params) ? undefined : params,
+							)
 
 						if (log?.result) console.log(result.rows)
 
