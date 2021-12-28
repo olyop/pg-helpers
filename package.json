@@ -2,7 +2,7 @@
 	"type": "module",
 	"types": "build",
 	"license": "MIT",
-	"version": "6.0.0",
+	"version": "6.0.1",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -30,29 +30,23 @@
 	"devDependencies": {
 		"@oly_op/eslint-config": "5.1.6",
 		"@oly_op/tsconfig": "1.0.7",
-		"@types/lodash": "4.14.178",
+		"@types/lodash-es": "4.17.5",
 		"@types/pg": "8.6.3",
-		"@types/react-dom": "17.0.11",
 		"@typescript-eslint/eslint-plugin": "5.8.1",
 		"@typescript-eslint/parser": "5.8.1",
 		"eslint": "8.5.0",
 		"eslint-config-airbnb": "19.0.4",
 		"eslint-config-airbnb-typescript": "16.1.0",
 		"eslint-plugin-import": "2.25.3",
-		"eslint-plugin-jsx-a11y": "6.5.1",
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "6.0.0",
-		"eslint-plugin-react-hooks": "4.3.0",
 		"pg": "8.7.1",
-		"react": "17.0.2",
-		"react-dom": "17.0.2",
 		"typescript": "4.5.4"
 	},
 	"peerDependencies": {
 		"pg": "8"
 	},
 	"dependencies": {
-		"@oly_op/pipe": "3.1.0",
-		"lodash": "4.17.21"
+		"lodash-es": "4.17.21"
 	}
 }
