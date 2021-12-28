@@ -1,11 +1,26 @@
-import { identity, isUndefined } from "lodash"
+import { identity, isArray, isUndefined } from "lodash"
 
-import { Parse, QueryOptions } from "./types"
+import { Parse, QueryOptions, QueryOptionsNormalized } from "./types"
 
 const normalizeInput =
-	<T>(input?: QueryOptions<T>) =>
-		(isUndefined(input) ? {
+	<T>(input?: QueryOptions<T>): QueryOptionsNormalized<T> => (
+		isUndefined(input) ? {
 			parse: identity as Parse<T>,
-		} : input)
+		} : {
+			log: input.log,
+			parse: (
+				input.parse || identity as Parse<T>
+			),
+			variables: (
+				input.variables && (
+					isArray(input.variables) ?
+						input.variables :
+						Object
+							.entries(input.variables)
+							.map(([ key, value ]) => ({ key, value }))
+				)
+			),
+		}
+	)
 
 export default normalizeInput

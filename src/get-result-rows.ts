@@ -1,5 +1,5 @@
-import { Result } from "./types"
+import { Row, Result } from "./types"
 
 export const getResultRows =
-	({ rows }: Result) =>
+	<T = Row>({ rows }: Result<T>) =>
 		rows

@@ -1,4 +1,4 @@
 export const join =
-	<T>(names: T[], prefix?: string) =>
+	(names: string[], prefix?: string) =>
 		(prefix === undefined ? "" : `${prefix}.`) +
 		names.join(prefix === undefined ? ", " : `, ${prefix}.`)

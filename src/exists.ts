@@ -1,6 +1,17 @@
+import { isArray } from "lodash"
+
 import { PoolOrClient } from "./types"
 import { query, QueryOptionsLog } from "./query"
 import { getResultExists } from "./get-result-exists"
+
+interface ExistsOptionsBase extends QueryOptionsLog {
+	table: string,
+	column: string,
+}
+
+interface ExistsQueryOptions extends ExistsOptionsBase {
+	value: string,
+}
 
 const existsQuery =
 	(client: PoolOrClient) =>
@@ -30,16 +41,6 @@ const existsQuery =
 				}],
 			})
 
-interface ExistsOptionsBase {
-	table: string,
-	column: string,
-	log?: QueryOptionsLog,
-}
-
-interface ExistsQueryOptions extends ExistsOptionsBase {
-	value: string,
-}
-
 export interface ExistsOptions extends ExistsOptionsBase {
 	value: string | string[],
 }
@@ -47,14 +48,18 @@ export interface ExistsOptions extends ExistsOptionsBase {
 export const exists =
 	(client: PoolOrClient) =>
 		async ({ value, ...input }: ExistsOptions) => {
-			if (Array.isArray(value)) {
-				const queries = value.map(val => (
-					existsQuery(client)({
-						...input,
-						value: val,
-					})
-				))
-				const res = await Promise.all(queries)
+			if (isArray(value)) {
+				const res =
+					await Promise.all(
+						value.map(
+							val => (
+								existsQuery(client)({
+									...input,
+									value: val,
+								})
+							),
+						),
+					)
 				return res.every(Boolean)
 			} else {
 				return existsQuery(client)({ ...input, value })

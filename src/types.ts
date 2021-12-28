@@ -6,5 +6,12 @@ export type PoolOrClient =
 export type Row =
 	Record<string, unknown>
 
+export interface RowExists {
+	exists: boolean,
+}
+
 export type Result<T = Row> =
 	ResultBase<T>
+
+export type ResultFunction<T> =
+	(result: Result) => T

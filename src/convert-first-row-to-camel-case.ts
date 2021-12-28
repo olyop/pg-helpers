@@ -1,17 +1,13 @@
-import pipe from "@oly_op/pipe"
+import { head } from "lodash"
 
-import { Row } from "./types"
+import { Result } from "./types"
 import { getResultRows } from "./get-result-rows"
 import { convertRowToCamelCase } from "./convert-row-to-camel-case"
 
-const head =
-	(result: Row[]) =>
-		result[0]
-
 export const convertFirstRowToCamelCase =
 	<T>() =>
-		pipe(
-			getResultRows,
-			head,
-			convertRowToCamelCase<T>(),
-		)
+		(result: Result) => {
+			const rows = getResultRows(result)
+			const firstRow = head(rows)!
+			return convertRowToCamelCase<T>()(firstRow)
+		}
