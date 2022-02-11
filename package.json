@@ -23,7 +23,7 @@
 		"build": "npx tsc",
 		"postpublish": "npm run push",
 		"delete-build": "rm -r -f build",
-		"prepublishOnly": "npm run delete-build && npm run build",
+		"prepublishOnly": "clear && npm run delete-build && npm run build",
 		"sync": "git checkout . && git remote update && git pull",
 		"push": "git add -A && git commit -m \"Update\" && git push"
 	},
