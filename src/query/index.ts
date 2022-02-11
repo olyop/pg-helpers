@@ -34,8 +34,11 @@ export const query =
 
 						return parse(result)
 					} catch (err) {
-						if (process.env["NODE_ENV"] === "development") console.error(err)
-						throw err
+						if (process.env["NODE_ENV"] === "development") {
+							throw err
+						} else {
+							throw new Error("Database Error")
+						}
 					}
 				} else {
 					throw new TypeError("Invalid query arguments")
