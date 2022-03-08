@@ -1,15 +1,12 @@
-import { exists } from "./exists"
 import { PoolOrClient } from "./types"
+import { exists, ExistsOptionsBase } from "./exists"
 
-export interface IsUniqueOptions {
+export interface IsUniqueOptions
+	extends ExistsOptionsBase {
 	value: string,
-	table: string,
-	column: string,
 }
 
 export const isUnique =
-	(pg: PoolOrClient) =>
-		async ({ value, table, column }: IsUniqueOptions) => {
-			const res = await exists(pg)({ table, value, column })
-			return !res
-		}
+	(client: PoolOrClient) =>
+		async ({ value, table, column, log }: IsUniqueOptions) =>
+			!(await exists(client)({ log, table, value, column }))

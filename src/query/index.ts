@@ -9,32 +9,38 @@ import determineSQLAndParams from "./determine-sql-and-params"
 export * from "./types"
 
 export const query =
-	(pg: PoolOrClient) =>
+	(client: PoolOrClient) =>
 		(sql: string) =>
 			async <T>(input?: QueryOptions<T>) => {
 				const { log, parse, variables } =
 					normalizeInput(input)
 
-				if (log?.variables) console.log(variables)
+				if (log?.variables) {
+					console.log(variables)
+				}
 
 				if (variablesAreProvided(sql, variables)) {
 					const { sqlWithValues, params } =
 						determineSQLAndParams(sql, variables)
 
-					if (log?.sql) console.log(sqlWithValues)
+					if (log?.sql) {
+						console.log(sqlWithValues)
+					}
 
 					try {
 						const result =
-							await pg.query<Record<string, unknown>>(
+							await client.query<Record<string, unknown>>(
 								sqlWithValues,
 								isEmpty(params) ? undefined : params,
 							)
 
-						if (log?.result) console.log(result.rows)
+						if (log?.result) {
+							console.log(result.rows)
+						}
 
 						return parse(result)
 					} catch (err) {
-						if (process.env["NODE_ENV"] === "development") {
+						if (process.env.NODE_ENV === "development") {
 							throw err
 						} else {
 							throw new Error("Database Error")

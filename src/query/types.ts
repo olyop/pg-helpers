@@ -15,14 +15,14 @@ export type VariableInput =
 export type Parse<T> =
 	(result: Result) => T
 
-export interface QueryOptionsLogOptions {
+export interface QueryLog {
 	sql?: boolean,
 	result?: boolean,
 	variables?: boolean,
 }
 
 export interface QueryOptionsLog {
-	log?: QueryOptionsLogOptions,
+	log?: QueryLog,
 }
 
 export interface QueryOptionsParse<T> {
