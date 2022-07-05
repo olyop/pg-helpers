@@ -6,14 +6,8 @@ import { PoolOrClient } from "../types"
 import { query, QueryOptionsLog } from "../query"
 import { getResultExists } from "../get-result-exists"
 
-console.log(
-	import.meta.url,
-	dirname(import.meta.url),
-	join(dirname(import.meta.url), "select-exists.sql"),
-)
-
 const SELECT_EXISTS =
-	await readFile(join(dirname(import.meta.url), "select-exists.sql"))
+	await readFile(join(dirname(import.meta.url.slice()), "select-exists.sql").slice(5))
 
 export interface ExistsOptionsBase
 	extends QueryOptionsLog {
