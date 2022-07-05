@@ -6,6 +6,10 @@ import { PoolOrClient } from "../types"
 import { query, QueryOptionsLog } from "../query"
 import { getResultExists } from "../get-result-exists"
 
+console.log({
+	"pg-helpers": join(dirname(import.meta.url), "select-exists.sql"),
+})
+
 const SELECT_EXISTS =
 	await readFile(join(dirname(import.meta.url), "select-exists.sql"))
 
