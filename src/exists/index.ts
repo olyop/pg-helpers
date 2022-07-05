@@ -1,3 +1,4 @@
+import path from "node:path"
 import { isArray } from "lodash-es"
 import { readFile } from "node:fs/promises"
 
@@ -6,7 +7,7 @@ import { query, QueryOptionsLog } from "../query"
 import { getResultExists } from "../get-result-exists"
 
 const SELECT_EXISTS =
-	(await readFile(new URL("./select-exists.sql", import.meta.url))).toString()
+	(await readFile(path.join(__dirname, "select-exists.sql"))).toString()
 
 export interface ExistsOptionsBase
 	extends QueryOptionsLog {
