@@ -2,7 +2,7 @@
 	"type": "module",
 	"types": "build",
 	"license": "MIT",
-	"version": "6.2.4",
+	"version": "6.2.5",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -24,7 +24,8 @@
 		"node": ">=18"
 	},
 	"scripts": {
-		"build": "tsc",
+		"build-copy-sql": "copy-and-watch 'src/**/*.sql' build/",
+		"build": "tsc && npm run build-copy-sql",
 		"postpublish": "npm run push",
 		"delete-build": "del-cli build",
 		"prepublishOnly": "clear && npm run delete-build && npm run build",
@@ -39,6 +40,9 @@
 		"@types/pg": "8.6.5",
 		"@typescript-eslint/eslint-plugin": "5.30.5",
 		"@typescript-eslint/parser": "5.30.5",
+		"copy-and-watch": "0.1.6",
+		"copy-cli": "1.2.1",
+		"cpy-cli": "4.1.0",
 		"del-cli": "4.0.1",
 		"eslint": "8.19.0",
 		"eslint-config-airbnb": "19.0.4",
@@ -55,6 +59,7 @@
 		"pg": "8"
 	},
 	"dependencies": {
-		"lodash-es": "4.17.21"
+		"lodash-es": "4.17.21",
+		"rm": "0.1.8"
 	}
 }
