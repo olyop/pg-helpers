@@ -7,7 +7,7 @@ import { query, QueryOptionsLog } from "../query"
 import { getResultExists } from "../get-result-exists"
 
 const SELECT_EXISTS =
-	await readFile(join(dirname(import.meta.url), "./select-exists.sql"))
+	await readFile(join(dirname(import.meta.url), "select-exists.sql"))
 
 export interface ExistsOptionsBase
 	extends QueryOptionsLog {
