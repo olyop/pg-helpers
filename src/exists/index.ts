@@ -12,8 +12,6 @@ const SELECT_EXISTS =
 		{ encoding: "utf8" },
 	)
 
-console.log({ SELECT_EXISTS })
-
 export interface ExistsOptionsBase
 	extends QueryOptionsLog {
 	table: string,
