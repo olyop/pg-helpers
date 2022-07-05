@@ -1,10 +1,8 @@
 import { PoolOrClient } from "./types"
-import { exists, ExistsOptionsBase } from "./exists"
+import { exists, ExistsQueryOptions } from "./exists"
 
-export interface IsUniqueOptions
-	extends ExistsOptionsBase {
-	value: string,
-}
+type IsUniqueOptions =
+	ExistsQueryOptions
 
 export const isUnique =
 	(client: PoolOrClient) =>

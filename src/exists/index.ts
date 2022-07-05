@@ -1,8 +1,12 @@
 import { isArray } from "lodash-es"
+import { readFile } from "node:fs/promises"
 
-import { PoolOrClient } from "./types"
-import { query, QueryOptionsLog } from "./query"
-import { getResultExists } from "./get-result-exists"
+import { PoolOrClient } from "../types"
+import { query, QueryOptionsLog } from "../query"
+import { getResultExists } from "../get-result-exists"
+
+const SELECT_EXISTS =
+	(await readFile(new URL("./select-exists.sql", import.meta.url))).toString()
 
 export interface ExistsOptionsBase
 	extends QueryOptionsLog {
@@ -10,18 +14,7 @@ export interface ExistsOptionsBase
 	column: string,
 }
 
-const SELECT_EXISTS = `
-	SELECT EXISTS (
-		SELECT
-			*
-		FROM
-			{{ table }}
-		WHERE
-			{{ column }} = {{ value }}
-	);
-`
-
-interface ExistsQueryOptions
+export interface ExistsQueryOptions
 	extends ExistsOptionsBase {
 	value: string,
 }
