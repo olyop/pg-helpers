@@ -1,8 +1,8 @@
 import { isEmpty } from "lodash-es"
 
-import { QueryOptions } from "./types"
 import { PoolOrClient } from "../types"
 import normalizeInput from "./normalize-input"
+import { QueryOptions, SQLInput } from "./types"
 import variablesAreProvided from "./variables-are-provided"
 import determineSQLAndParams from "./determine-sql-and-params"
 
@@ -10,10 +10,10 @@ export * from "./types"
 
 export const query =
 	(client: PoolOrClient) =>
-		(sql: string) =>
+		(sqlInput: SQLInput) =>
 			async <T>(input?: QueryOptions<T>) => {
-				const { log, parse, variables } =
-					normalizeInput(input)
+				const { sql, log, parse, variables } =
+					normalizeInput(sqlInput, input)
 
 				if (log?.variables) {
 					console.log(variables)

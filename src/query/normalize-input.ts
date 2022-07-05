@@ -1,13 +1,32 @@
 import { identity, isArray, isUndefined } from "lodash-es"
 
-import { Parse, QueryOptions, QueryOptionsNormalized } from "./types"
+import {
+	Parse,
+	Variable,
+	SQLInput,
+	QueryOptions,
+	QueryOptionsLog,
+	QueryOptionsParse,
+	QueryOptionsVariables,
+} from "./types"
+
+const normalizeSQL =
+	(sql: SQLInput) => {
+		if (Buffer.isBuffer(sql)) {
+			return Buffer.toString()
+		} else {
+			return sql
+		}
+	}
 
 const normalizeInput =
-	<T>(input?: QueryOptions<T>): QueryOptionsNormalized<T> => (
+	<T>(sql: SQLInput, input?: QueryOptions<T>): QueryOptionsNormalized<T> => (
 		isUndefined(input) ? {
+			sql: normalizeSQL(sql),
 			parse: identity as Parse<T>,
 		} : {
 			log: input.log,
+			sql: normalizeSQL(sql),
 			parse: (
 				input.parse || identity as Parse<T>
 			),
@@ -22,5 +41,13 @@ const normalizeInput =
 			),
 		}
 	)
+
+export interface QueryOptionsNormalized<T>
+	extends
+	QueryOptionsLog,
+	QueryOptionsParse<T>,
+	QueryOptionsVariables<Variable[]> {
+	sql: string,
+}
 
 export default normalizeInput

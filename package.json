@@ -2,7 +2,7 @@
 	"type": "module",
 	"types": "build",
 	"license": "MIT",
-	"version": "6.2.3",
+	"version": "6.2.4",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -55,7 +55,6 @@
 		"pg": "8"
 	},
 	"dependencies": {
-		"lodash-es": "4.17.21",
-		"resolve-cwd": "3.0.0"
+		"lodash-es": "4.17.21"
 	}
 }

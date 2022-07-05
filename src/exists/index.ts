@@ -1,15 +1,13 @@
 import { isArray } from "lodash-es"
-import resolveCWD from "resolve-cwd"
+import { join, dirname } from "node:path"
 import { readFile } from "node:fs/promises"
 
 import { PoolOrClient } from "../types"
 import { query, QueryOptionsLog } from "../query"
 import { getResultExists } from "../get-result-exists"
 
-console.log(import.meta.url)
-
 const SELECT_EXISTS =
-	(await readFile(resolveCWD("./select-exists.sql"))).toString()
+	await readFile(join(dirname(import.meta.url), "./select-exists.sql"))
 
 export interface ExistsOptionsBase
 	extends QueryOptionsLog {

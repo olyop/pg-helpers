@@ -1,5 +1,8 @@
 import { Result } from "../types"
 
+export type SQLInput =
+	string | Buffer
+
 export type VariableType =
 	string | number | boolean | null
 
@@ -32,12 +35,6 @@ export interface QueryOptionsParse<T> {
 export interface QueryOptionsVariables<V> {
 	variables?: V,
 }
-
-export interface QueryOptionsNormalized<T>
-	extends
-	QueryOptionsLog,
-	QueryOptionsParse<T>,
-	QueryOptionsVariables<Variable[]> {}
 
 export interface QueryOptions<T>
 	extends
