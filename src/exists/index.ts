@@ -6,6 +6,8 @@ import { PoolOrClient } from "../types"
 import { query, QueryOptionsLog } from "../query"
 import { getResultExists } from "../get-result-exists"
 
+console.log(import.meta.url)
+
 const SELECT_EXISTS =
 	(await readFile(resolveCWD("./select-exists.sql"))).toString()
 
