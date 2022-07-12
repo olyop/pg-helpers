@@ -1,8 +1,6 @@
-import { isEmpty } from "lodash-es"
-
 import { Result } from "./types"
 import { getResultRows } from "./get-result-rows"
 
-export const isResultEmpty =
+export const getResultExistsOrNull =
 	(result: Result) =>
-		isEmpty(getResultRows(result))
+		getResultRows(result)[0]?.exists || null

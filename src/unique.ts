@@ -5,6 +5,6 @@ type IsUniqueOptions =
 	ExistsQueryOptions
 
 export const isUnique =
-	(client: PoolOrClient) =>
-		async ({ value, table, column, log }: IsUniqueOptions) =>
-			!(await exists(client)({ log, table, value, column }))
+	(pg: PoolOrClient) =>
+		async (options: IsUniqueOptions) =>
+			!(await exists(pg)(options))
