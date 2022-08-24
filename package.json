@@ -2,7 +2,7 @@
 	"type": "module",
 	"types": "build",
 	"license": "MIT",
-	"version": "6.2.18",
+	"version": "6.2.19",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -20,8 +20,8 @@
 		"build"
 	],
 	"engines": {
-		"npm": ">=8",
-		"node": ">=18"
+		"npm": ">=8.18",
+		"node": ">=16.7"
 	},
 	"scripts": {
 		"build-copy-sql": "copy-and-watch 'src/**/*.sql' build",
