@@ -8,5 +8,5 @@ export interface Row extends Record<string, unknown> {
 	exists?: boolean,
 }
 
-export type Result<T = Row> =
+export type Result<T extends Row = Row> =
 	ResultBase<T>

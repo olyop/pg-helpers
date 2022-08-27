@@ -41,6 +41,7 @@ const existsQuery =
 					parameterized: true,
 				}],
 			})
+
 export interface ExistsOptions
 	extends ExistsOptionsBase {
 	value: string | string[],

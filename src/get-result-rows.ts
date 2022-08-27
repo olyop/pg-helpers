@@ -1,5 +1,5 @@
 import { Row, Result } from "./types"
 
 export const getResultRows =
-	<T = Row>({ rows }: Result<T>) =>
+	<T extends Row = Row>({ rows }: Result<T>) =>
 		rows

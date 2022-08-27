@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"outDir": "build",
 		"lib": ["ESNext"],
-		"declaration": true
+		"declaration": true,
+		"exactOptionalPropertyTypes": false
 	},
 	"include": [
 		"src"
