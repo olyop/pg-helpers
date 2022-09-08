@@ -10,7 +10,7 @@ const variablesAreProvided =
 		} else {
 			const keys = getVariableKeys(sql)
 			return variables
-				.map(({ key, value }) => keys.includes(key) && value !== undefined)
+				.map(({ key, value }) => !isUndefined(value) && keys.includes(key))
 				.every(Boolean)
 		}
 	}
