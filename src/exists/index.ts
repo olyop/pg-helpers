@@ -51,17 +51,14 @@ export const exists =
 	(client: PoolOrClient) =>
 		async ({ value, ...input }: ExistsOptions) => {
 			if (isArray(value)) {
-				const res =
-					await Promise.all(
-						value.map(
-							val => (
-								existsQuery(client)({
-									...input,
-									value: val,
-								})
-							),
-						),
-					)
+				const res = await Promise.all(
+					value.map(val => (
+						existsQuery(client)({
+							...input,
+							value: val,
+						})
+					)),
+				)
 				return res.every(Boolean)
 			} else {
 				return existsQuery(client)({ ...input, value })
