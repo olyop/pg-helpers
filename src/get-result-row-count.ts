@@ -1,5 +1,3 @@
-import { Result } from "./types"
+import { Result } from "./types";
 
-export const getResultRowCount =
-	({ rowCount }: Result) =>
-		rowCount
+export const getResultRowCount = ({ rowCount }: Result) => rowCount;

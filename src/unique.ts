@@ -1,10 +1,7 @@
-import { PoolOrClient } from "./types"
-import { exists, ExistsQueryOptions } from "./exists"
+import { PoolOrClient } from "./types";
+import { exists, ExistsQueryOptions } from "./exists";
 
-type IsUniqueOptions =
-	ExistsQueryOptions
+type IsUniqueOptions = ExistsQueryOptions;
 
-export const isUnique =
-	(pg: PoolOrClient) =>
-		async (options: IsUniqueOptions) =>
-			!(await exists(pg)(options))
+export const isUnique = (pg: PoolOrClient) => async (options: IsUniqueOptions) =>
+	!(await exists(pg)(options));

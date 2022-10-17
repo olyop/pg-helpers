@@ -6,25 +6,29 @@
 pg-helpers is a wrapper library for the popular [node-postgres](https://node-postgres.com/) library (`pg` npm package). It adds many utilities including a `query` function that makes inserting variables and parameters a lot easier in my opinion. It does this by using a simple template mechanism in your SQL code that allows you to insert a variable or a parameter.
 
 ## Installation
+
 ```sh
 $ npm install @oly_op/pg-helpers
 ```
 
 ## Usage
+
 `@oly_op/pg-helpers` re-exports everything from `pg`.
 
 ### types
-```typescript
-import type { Pool, PoolClient, QueryResult as ResultBase } from "pg"
 
-export type PoolOrClient = 	Pool | PoolClient
-export type Row = Record<string, unknown>
-export type Result<T = Row> = ResultBase<T>
+```typescript
+import type { Pool, PoolClient, QueryResult as ResultBase } from "pg";
+
+export type PoolOrClient = Pool | PoolClient;
+export type Row = Record<string, unknown>;
+export type Result<T = Row> = ResultBase<T>;
 ```
 
 ### query helpers
 
 #### `query`
+
 ```typescript
 // definition
 query(client: PoolOrClient) =>
@@ -79,7 +83,7 @@ const getUser =
         columnNames: join(["user_id", "name"]),
       },
     })
-  
+
 console.log((await getUser("1234")).name)
 ```
 

@@ -1,19 +1,17 @@
-import { isNull } from "lodash-es"
+import { isNull } from "lodash-es";
 
-import { Variable } from "./types"
+import { Variable } from "./types";
 
 const determineReplaceValue =
 	(params: string[]) =>
-		({ value, parameterized = false }: Omit<Variable, "key">) => {
-			const val =
-				isNull(value) ?
-					"NULL" : value.toString()
-			if (parameterized) {
-				params.push(val)
-				return `$${params.length}`
-			} else {
-				return val
-			}
+	({ value, parameterized = false }: Omit<Variable, "key">) => {
+		const valueOrSQLNull = isNull(value) ? "NULL" : value.toString();
+		if (parameterized) {
+			params.push(valueOrSQLNull);
+			return `$${params.length}`;
+		} else {
+			return valueOrSQLNull;
 		}
+	};
 
-export default determineReplaceValue
+export default determineReplaceValue;
