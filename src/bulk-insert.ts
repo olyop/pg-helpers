@@ -1,7 +1,7 @@
-import pgMinify from "pg-minify";
 import snakeCase from "lodash-es/snakeCase";
 
 import { PoolOrClient, VariableType } from "./types";
+import { baseQuery } from "./base-query";
 
 export const bulkInsert =
 	(pg: PoolOrClient) =>
@@ -36,7 +36,7 @@ export const bulkInsert =
 
 		sql += ";";
 
-		await pg.query(pgMinify(sql));
+		await baseQuery(pg)(sql);
 	};
 
 interface Column<T> {
@@ -48,25 +48,3 @@ interface BulkInsertOptions<T> {
 	columns: Column<T>[];
 	table: string;
 }
-
-interface User {
-	userID: number;
-	name: string;
-}
-
-const data: User[] = [
-	{
-		userID: 1,
-		name: "Oliver",
-	},
-];
-
-await bulkInsert({} as PoolOrClient)<User>(data, {
-	table: "users",
-	columns: [
-		{
-			key: "name",
-			itemToValue: ({ name }) => name,
-		},
-	],
-});
