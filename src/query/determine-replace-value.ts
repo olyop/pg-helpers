@@ -1,4 +1,4 @@
-import { isNull } from "lodash-es";
+import isNull from "lodash-es/isNull";
 
 import { Variable } from "./types";
 

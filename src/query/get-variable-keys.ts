@@ -1,4 +1,4 @@
-import { uniq } from "lodash-es";
+import uniq from "lodash-es/uniq";
 
 const getVariableKeys = (sql: string) => {
 	const keys: string[] = [];

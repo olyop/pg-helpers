@@ -1,10 +1,20 @@
-import { isEmpty } from "lodash-es";
+import isEmpty from "lodash-es/isEmpty";
+import pgMinify, { IMinifyOptions } from "pg-minify";
 
-import { PoolOrClient } from "../types";
 import normalizeInput from "./normalize-input";
+import { PoolOrClient, RowBase } from "../types";
 import { QueryOptions, SQLInput } from "./types";
 import variablesAreProvided from "./variables-are-provided";
 import determineSQLAndParams from "./determine-sql-and-params";
+
+export * from "./types";
+
+const IS_DEV = process.env.NODE_ENV === "development";
+
+const MINIFY_OPTIONS: IMinifyOptions = {
+	compress: IS_DEV,
+	removeAll: IS_DEV,
+};
 
 export const query =
 	(pg: PoolOrClient) =>
@@ -16,27 +26,30 @@ export const query =
 			console.log(variables);
 		}
 
-		if (variablesAreProvided(sql, variables)) {
+		if (IS_DEV && variablesAreProvided(sql, variables)) {
 			const { sqlWithValues, params } = determineSQLAndParams(sql, variables);
+			const sqlWithValuesMinified = pgMinify(sqlWithValues, MINIFY_OPTIONS);
 
 			if (log?.sql) {
-				console.log(sqlWithValues);
+				console.log(sqlWithValuesMinified);
 			}
 
 			try {
-				const result = await pg.query<Record<string, unknown>>(
-					sqlWithValues,
+				const result = await pg.query<RowBase>(
+					sqlWithValuesMinified,
 					isEmpty(params) ? undefined : params,
 				);
 
+				const parsedResult = parse(result);
+
 				if (log?.result) {
-					console.log(result.rows);
+					console.log(parsedResult);
 				}
 
-				return parse(result);
-			} catch (err) {
-				if (process.env.NODE_ENV === "development") {
-					throw err;
+				return parsedResult;
+			} catch (error) {
+				if (IS_DEV) {
+					throw error;
 				} else {
 					throw new Error("Database Error");
 				}
@@ -45,5 +58,3 @@ export const query =
 			throw new TypeError("Invalid query arguments");
 		}
 	};
-
-export * from "./types";

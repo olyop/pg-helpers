@@ -1,8 +1,6 @@
-import { Result } from "../types";
+import { Result, VariableType } from "../types";
 
 export type SQLInput = string | Buffer;
-
-export type VariableType = string | number | boolean | null;
 
 export interface Variable {
 	key: string;

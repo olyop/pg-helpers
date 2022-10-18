@@ -1,4 +1,6 @@
-import { identity, isArray, isUndefined } from "lodash-es";
+import isArray from "lodash-es/isArray";
+import identity from "lodash-es/identity";
+import isUndefined from "lodash-es/isUndefined";
 
 import {
 	Parse,
