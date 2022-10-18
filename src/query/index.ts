@@ -31,6 +31,8 @@ export const query =
 			if (log?.result) {
 				console.log(parsedResult);
 			}
+
+			return parsedResult;
 		} else {
 			throw new TypeError("Invalid query arguments");
 		}
