@@ -18,17 +18,21 @@ export const query =
 		}
 
 		if (variablesAreProvided(sql, variables)) {
-			const { sqlWithValues, params } = determineSQLAndParams(sql, variables);
+			const { sqlWithValues, paramaters } = determineSQLAndParams(sql, variables);
 
 			if (log?.sql) {
 				console.log(sqlWithValues);
 			}
 
-			const result = await baseQuery(pg)(sqlWithValues, params);
+			const result = await baseQuery(pg)(sqlWithValues, paramaters);
+
+			if (log?.result) {
+				console.log(result);
+			}
 
 			const parsedResult = parse(result);
 
-			if (log?.result) {
+			if (log?.parsedResult) {
 				console.log(parsedResult);
 			}
 

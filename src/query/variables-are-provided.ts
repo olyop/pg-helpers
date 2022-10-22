@@ -20,14 +20,12 @@ const variablesAreProvided = (sql: string, variables?: Variable[]) => {
 			if (areVariablesProvided) {
 				return true;
 			} else {
-				if (process.env.NODE_ENV === "development") {
-					console.log(`Variables are not provided for the following keys: ${keys.toString()}`);
-				}
+				console.error(`Variables are not provided for the following keys: ${keys.toString()}`);
 				return false;
 			}
 		}
 	} else {
-		return false;
+		return true;
 	}
 };
 

@@ -16,6 +16,7 @@ export interface QueryLog {
 	sql?: boolean;
 	result?: boolean;
 	variables?: boolean;
+	parsedResult?: boolean;
 }
 
 export interface QueryOptionsLog {
