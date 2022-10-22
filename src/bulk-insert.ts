@@ -1,11 +1,11 @@
 import snakeCase from "lodash-es/snakeCase";
 
-import { PoolOrClient, VariableType } from "./types";
 import { baseQuery } from "./base-query";
+import { PoolOrClient, VariableType } from "./types";
 
 export const bulkInsert =
 	(pg: PoolOrClient) =>
-	async <T>({ data, table, columns }: BulkInsertOptions<T>) => {
+	async <T>({ data, table, columns, log }: BulkInsertOptions<T>) => {
 		let sql = `INSERT INTO ${table}`;
 
 		// Define columns
@@ -36,6 +36,10 @@ export const bulkInsert =
 
 		sql += ";";
 
+		if (log) {
+			console.log(sql);
+		}
+
 		await baseQuery(pg)(sql);
 	};
 
@@ -46,6 +50,7 @@ interface Column<T> {
 
 interface BulkInsertOptions<T> {
 	data: T[];
+	log?: boolean;
 	table: string;
 	columns: Column<T>[];
 }
