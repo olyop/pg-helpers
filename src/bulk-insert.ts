@@ -5,7 +5,7 @@ import { baseQuery } from "./base-query";
 
 export const bulkInsert =
 	(pg: PoolOrClient) =>
-	async <T>(rows: T[], { table, columns }: BulkInsertOptions<T>) => {
+	async <T>({ data, table, columns }: BulkInsertOptions<T>) => {
 		let sql = `INSERT INTO ${table}`;
 
 		// Define columns
@@ -15,7 +15,7 @@ export const bulkInsert =
 		sql += " VALUES ";
 
 		// Loop over all rows
-		for (const [rowIndex, row] of rows.entries()) {
+		for (const [rowIndex, row] of data.entries()) {
 			sql += "(";
 
 			// Loop over all columns
@@ -29,7 +29,7 @@ export const bulkInsert =
 
 			sql += ")";
 
-			if (rowIndex !== rows.length - 1) {
+			if (rowIndex !== data.length - 1) {
 				sql += ",";
 			}
 		}
@@ -45,6 +45,7 @@ interface Column<T> {
 }
 
 interface BulkInsertOptions<T> {
-	columns: Column<T>[];
+	data: T[];
 	table: string;
+	columns: Column<T>[];
 }
