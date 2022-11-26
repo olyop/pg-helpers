@@ -1,10 +1,11 @@
-import isArray from "lodash-es/isArray";
-import { join, dirname } from "node:path";
 import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
 
-import { PoolOrClient } from "../types";
-import { query, QueryOptionsLog } from "../query";
+import isArray from "lodash-es/isArray";
+
 import { getResultExists } from "../get-result-exists";
+import { QueryOptionsLog, query } from "../query";
+import { PoolOrClient } from "../types";
 
 const SELECT_EXISTS = await readFile(join(dirname(import.meta.url), "select-exists.sql").slice(5), {
 	encoding: "utf8",

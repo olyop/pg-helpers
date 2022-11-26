@@ -1,25 +1,30 @@
 import pgMinify, { IMinifyOptions } from "pg-minify";
 
-import { PoolOrClient, RowBase } from "./types";
+import { IS_DEVELOPMENT } from "./globals";
+import { PoolOrClient, RowBase, VariableType } from "./types";
 
 export * from "./types";
 
-const IS_DEV = process.env.NODE_ENV === "development";
+class DatabaseError extends Error {
+	constructor() {
+		super("An error occurred while querying the database");
+	}
+}
 
 const MINIFY_OPTIONS: IMinifyOptions = {
-	compress: IS_DEV,
-	removeAll: IS_DEV,
+	removeAll: true,
+	compress: !IS_DEVELOPMENT,
 };
 
-export const baseQuery = (pg: PoolOrClient) => async (sql: string, params?: string[]) => {
+export const baseQuery = (pg: PoolOrClient) => async (sql: string, paramaters?: VariableType[]) => {
 	try {
 		const sqlMinified = pgMinify(sql, MINIFY_OPTIONS);
-		return await pg.query<RowBase>(sqlMinified, params);
+		return await pg.query<RowBase>(sqlMinified, paramaters);
 	} catch (error) {
-		if (IS_DEV) {
+		if (IS_DEVELOPMENT) {
 			throw error;
 		} else {
-			throw new Error("Database Error");
+			throw new DatabaseError();
 		}
 	}
 };

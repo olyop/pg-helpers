@@ -1,7 +1,7 @@
 import mapKeys from "lodash-es/mapKeys";
 
-import { Row } from "./types";
 import { convertStringToCamelCase } from "./convert-string-to-camel-case";
+import { Row } from "./types";
 
 export const convertRowToCamelCase =
 	<T>() =>

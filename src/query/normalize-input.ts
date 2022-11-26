@@ -1,15 +1,15 @@
-import isArray from "lodash-es/isArray";
 import identity from "lodash-es/identity";
+import isArray from "lodash-es/isArray";
 import isUndefined from "lodash-es/isUndefined";
 
 import {
 	Parse,
-	Variable,
-	SQLInput,
 	QueryOptions,
 	QueryOptionsLog,
 	QueryOptionsParse,
 	QueryOptionsVariables,
+	SQLInput,
+	Variable,
 } from "./types";
 
 const normalizeSQL = (sql: SQLInput) => {

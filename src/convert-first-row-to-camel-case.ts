@@ -1,8 +1,8 @@
 import head from "lodash-es/head";
 
-import { Result } from "./types";
-import { getResultRows } from "./get-result-rows";
 import { convertRowToCamelCase } from "./convert-row-to-camel-case";
+import { getResultRows } from "./get-result-rows";
+import { Result } from "./types";
 
 export const convertFirstRowToCamelCase =
 	<T>() =>

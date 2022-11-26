@@ -1,9 +1,10 @@
-import { PoolOrClient } from "../types";
 import { baseQuery } from "../base-query";
+import { IS_DEVELOPMENT } from "../globals";
+import { PoolOrClient } from "../types";
+import determineSQLAndParams from "./determine-sql-and-params";
 import normalizeInput from "./normalize-input";
 import { QueryOptions, SQLInput } from "./types";
 import variablesAreProvided from "./variables-are-provided";
-import determineSQLAndParams from "./determine-sql-and-params";
 
 export * from "./types";
 
@@ -13,26 +14,26 @@ export const query =
 	async <T>(input?: QueryOptions<T>) => {
 		const { sql, log, parse, variables } = normalizeInput(sqlInput, input);
 
-		if (log?.variables) {
+		if (IS_DEVELOPMENT && log?.variables) {
 			console.log(variables);
 		}
 
 		if (variablesAreProvided(sql, variables)) {
 			const { sqlWithValues, paramaters } = determineSQLAndParams(sql, variables);
 
-			if (log?.sql) {
+			if (IS_DEVELOPMENT && log?.sql) {
 				console.log(sqlWithValues);
 			}
 
 			const result = await baseQuery(pg)(sqlWithValues, paramaters);
 
-			if (log?.result) {
+			if (IS_DEVELOPMENT && log?.result) {
 				console.log(result);
 			}
 
 			const parsedResult = parse(result);
 
-			if (log?.parsedResult) {
+			if (IS_DEVELOPMENT && log?.parsedResult) {
 				console.log(parsedResult);
 			}
 

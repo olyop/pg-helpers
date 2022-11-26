@@ -11,4 +11,4 @@ export interface Row extends RowBase {
 
 export type Result<T extends Row = Row> = ResultBase<T>;
 
-export type VariableType = string | number | boolean | null;
+export type VariableType = Date | string | number | boolean | null | undefined;

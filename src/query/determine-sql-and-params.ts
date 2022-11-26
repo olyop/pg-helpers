@@ -1,18 +1,34 @@
+import "node:path";
+
+import { isBoolean, isNull, isString, isUndefined } from "lodash-es";
+
+import { VariableType } from "../types";
 import { Variable } from "./types";
-import determineReplaceValue from "./determine-replace-value";
 
 const determineSQLAndParams = (sql: string, variables?: Variable[]) => {
-	const paramaters: string[] = [];
+	const paramaters: VariableType[] = [];
 
 	const sqlWithValues =
-		variables?.reduce(
-			(query, variable) =>
-				query.replace(
-					new RegExp(`{{ ${variable.key} }}`, "gi"),
-					determineReplaceValue(paramaters)(variable),
-				),
-			sql,
-		) || sql;
+		variables?.reduce((query, { key, value, parameterized = false }) => {
+			let computedValue: VariableType;
+
+			if (parameterized) {
+				paramaters.push(value);
+				return `$${paramaters.length}`;
+			} else {
+				if (isUndefined(value) || isNull(value)) {
+					computedValue = "NULL";
+				} else if (isString(value)) {
+					computedValue = `'${value}'`;
+				} else if (isBoolean(value)) {
+					computedValue = value ? "TRUE" : "FALSE";
+				} else {
+					computedValue = value.toString();
+				}
+			}
+
+			return query.replace(new RegExp(`{{ ${key} }}`, "gi"), computedValue);
+		}, sql) || sql;
 
 	return {
 		paramaters,

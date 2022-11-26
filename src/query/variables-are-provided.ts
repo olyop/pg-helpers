@@ -1,7 +1,7 @@
 import isUndefined from "lodash-es/isUndefined";
 
-import { Variable } from "./types";
 import getVariableKeys from "./get-variable-keys";
+import { Variable } from "./types";
 
 const IS_DEV = process.env.NODE_ENV === "development";
 
