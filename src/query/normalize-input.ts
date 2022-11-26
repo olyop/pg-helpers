@@ -34,11 +34,14 @@ const normalizeInput = <T>(
 				input.variables &&
 				(isArray(input.variables)
 					? input.variables
-					: Object.entries<VariableInputRecordValue>(input.variables).map(([key, value]) => ({
-							key,
-							value: isArray(value) ? value[0] : value,
-							...(isArray(value) ? value[1] : {}),
-					  }))),
+					: Object.entries<VariableInputRecordValue>(input.variables).map<Variable>(
+							([key, value]) => ({
+								key,
+								value: isArray(value) ? value[0] : value,
+								surroundStringWithCommas: isArray(value) ? value[1][0] : undefined,
+								parameterized: isArray(value) ? value[1][1] : undefined,
+							}),
+					  )),
 		};
 	}
 };
