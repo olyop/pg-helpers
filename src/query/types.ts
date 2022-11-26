@@ -2,14 +2,19 @@ import { Result, VariableType } from "../types";
 
 export type SQLInput = string | Buffer;
 
-export interface Variable {
-	key: string;
-	value: VariableType;
+export interface VariableOptions {
 	parameterized?: boolean;
 	surroundStringWithCommas?: boolean;
 }
 
-export type VariableInput = Variable[] | Record<string, VariableType>;
+export interface Variable extends VariableOptions {
+	key: string;
+	value: VariableType;
+}
+
+export type VariableInput =
+	| Variable[]
+	| Record<string, VariableType | [value: VariableType, options: VariableOptions]>;
 
 export type Parse<T> = (result: Result) => T;
 
