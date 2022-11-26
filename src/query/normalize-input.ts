@@ -12,23 +12,15 @@ import {
 	Variable,
 } from "./types";
 
-const normalizeSQL = (sql: SQLInput) => {
-	if (Buffer.isBuffer(sql)) {
-		return Buffer.toString();
-	} else {
-		return sql;
-	}
-};
-
 const normalizeInput = <T>(sql: SQLInput, input?: QueryOptions<T>): QueryOptionsNormalized<T> =>
 	isUndefined(input)
 		? {
-				sql: normalizeSQL(sql),
+				sql: sql.toString(),
 				parse: identity as Parse<T>,
 		  }
 		: {
 				log: input.log,
-				sql: normalizeSQL(sql),
+				sql: sql.toString(),
 				parse: input.parse || (identity as Parse<T>),
 				variables:
 					input.variables &&

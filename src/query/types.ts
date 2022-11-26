@@ -6,6 +6,7 @@ export interface Variable {
 	key: string;
 	value: VariableType;
 	parameterized?: boolean;
+	surroundStringWithCommas?: boolean;
 }
 
 export type VariableInput = Variable[] | Record<string, VariableType>;

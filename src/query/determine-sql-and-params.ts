@@ -9,26 +9,29 @@ const determineSQLAndParams = (sql: string, variables?: Variable[]) => {
 	const paramaters: VariableType[] = [];
 
 	const sqlWithValues =
-		variables?.reduce((query, { key, value, parameterized = false }) => {
-			let computedValue: VariableType;
+		variables?.reduce(
+			(query, { key, value, parameterized = false, surroundStringWithCommas = true }) => {
+				let computedValue: VariableType;
 
-			if (parameterized) {
-				paramaters.push(value);
-				return `$${paramaters.length}`;
-			} else {
-				if (isUndefined(value) || isNull(value)) {
-					computedValue = "NULL";
-				} else if (isString(value)) {
-					computedValue = `'${value}'`;
-				} else if (isBoolean(value)) {
-					computedValue = value ? "TRUE" : "FALSE";
+				if (parameterized) {
+					paramaters.push(value);
+					return `$${paramaters.length}`;
 				} else {
-					computedValue = value.toString();
+					if (isUndefined(value) || isNull(value)) {
+						computedValue = "NULL";
+					} else if (isString(value)) {
+						computedValue = surroundStringWithCommas ? `'${value}'` : value;
+					} else if (isBoolean(value)) {
+						computedValue = value ? "TRUE" : "FALSE";
+					} else {
+						computedValue = value.toString();
+					}
 				}
-			}
 
-			return query.replace(new RegExp(`{{ ${key} }}`, "gi"), computedValue);
-		}, sql) || sql;
+				return query.replace(new RegExp(`{{ ${key} }}`, "gi"), computedValue);
+			},
+			sql,
+		) || sql;
 
 	return {
 		paramaters,
