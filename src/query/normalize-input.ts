@@ -10,6 +10,7 @@ import {
 	QueryOptionsVariables,
 	SQLInput,
 	Variable,
+	VariableInputRecordValue,
 } from "./types";
 
 const normalizeInput = <T>(
@@ -33,7 +34,7 @@ const normalizeInput = <T>(
 				input.variables &&
 				(isArray(input.variables)
 					? input.variables
-					: Object.entries(input.variables).map(([key, value]) => ({
+					: Object.entries<VariableInputRecordValue>(input.variables).map(([key, value]) => ({
 							key,
 							value: isArray(value) ? value[0] : value,
 							...(isArray(value) ? value[1] : {}),

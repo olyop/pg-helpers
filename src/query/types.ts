@@ -12,9 +12,11 @@ export interface Variable extends VariableOptions {
 	value: VariableType;
 }
 
-export type VariableInput =
-	| Variable[]
-	| Record<string, VariableType | [value: VariableType, options: VariableOptions]>;
+export type VariableInputRecordValue =
+	| VariableType
+	| [value: VariableType, options: VariableOptions];
+
+export type VariableInput = Variable[] | Record<string, VariableInputRecordValue>;
 
 export type Parse<T> = (result: Result) => T;
 
