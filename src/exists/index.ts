@@ -30,9 +30,9 @@ const existsQuery =
 			log,
 			parse: getResultExists,
 			variables: {
-				table,
-				column,
 				value: [value, [false, true]],
+				table: [column, [false, false]],
+				column: [column, [false, false]],
 			},
 		});
 
