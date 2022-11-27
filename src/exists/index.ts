@@ -1,8 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
-import isArray from "lodash-es/isArray";
-
 import { getResultExists } from "../get-result-exists";
 import { QueryOptionsLog, query } from "../query";
 import { PoolOrClient } from "../types";
@@ -26,21 +24,11 @@ const existsQuery =
 		query(client)(SELECT_EXISTS)({
 			log,
 			parse: getResultExists,
-			variables: [
-				{
-					key: "table",
-					value: table,
-				},
-				{
-					key: "column",
-					value: column,
-				},
-				{
-					value,
-					key: "value",
-					parameterized: true,
-				},
-			],
+			variables: {
+				table,
+				column,
+				value: [value, [null, true]],
+			},
 		});
 
 export interface ExistsOptions extends ExistsOptionsBase {
@@ -50,7 +38,7 @@ export interface ExistsOptions extends ExistsOptionsBase {
 export const exists =
 	(client: PoolOrClient) =>
 	async ({ value, ...input }: ExistsOptions) => {
-		if (isArray(value)) {
+		if (Array.isArray(value)) {
 			const response = await Promise.all(
 				value.map(valueTwo =>
 					existsQuery(client)({
