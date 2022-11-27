@@ -1,7 +1,5 @@
-import uniq from "lodash-es/uniq";
-
 const getVariableKeys = (sql: string) => {
-	const keys: string[] = [];
+	const keys = new Set<string>();
 
 	// scan flags
 	let inCurly = false;
@@ -12,7 +10,7 @@ const getVariableKeys = (sql: string) => {
 	for (const character of sql) {
 		if (inVariable) {
 			if (character === " ") {
-				keys.push(tempKey);
+				keys.add(tempKey);
 				inVariable = false;
 				tempKey = "";
 			} else {
@@ -29,7 +27,7 @@ const getVariableKeys = (sql: string) => {
 		}
 	}
 
-	return uniq(keys);
+	return keys;
 };
 
 export default getVariableKeys;

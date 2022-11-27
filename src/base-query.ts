@@ -3,9 +3,7 @@ import pgMinify, { IMinifyOptions } from "pg-minify";
 import { IS_DEVELOPMENT } from "./globals";
 import { PoolOrClient, RowBase, VariableType } from "./types";
 
-export * from "./types";
-
-class DatabaseError extends Error {
+export class DatabaseError extends Error {
 	constructor() {
 		super("An error occurred while querying the database");
 	}

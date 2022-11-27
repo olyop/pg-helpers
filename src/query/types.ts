@@ -11,7 +11,10 @@ export interface Variable {
 
 export type VariableInputRecordValue =
 	| VariableType
-	| [value: VariableType, options: [surroundStringWithCommas: boolean, parameterized: boolean]];
+	| [
+			value: VariableType,
+			options: [surroundStringWithCommas: boolean | null, parameterized?: boolean | null],
+	  ];
 
 export type VariableInput = Variable[] | Record<string, VariableInputRecordValue>;
 

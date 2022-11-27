@@ -4,11 +4,16 @@ export type PoolOrClient = Pool | PoolClient | Client;
 
 export type RowBase = Record<string, unknown>;
 
-export interface Row extends RowBase {
+export interface RowCount extends RowBase {
 	count?: number;
+}
+
+export interface RowExists extends RowBase {
 	exists?: boolean;
 }
 
-export type Result<T extends Row = Row> = ResultBase<T>;
+export interface Row extends RowCount, RowExists, RowBase {}
 
-export type VariableType = Date | string | number | boolean | null | undefined;
+export type Result<T extends RowBase = RowBase> = ResultBase<T>;
+
+export type VariableType = string | number | boolean | null | undefined;

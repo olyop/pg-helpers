@@ -18,7 +18,11 @@ export const query =
 			console.log(variables);
 		}
 
-		if (variablesAreProvided(sql, variables)) {
+		const variablesAreProvidedResult = IS_DEVELOPMENT ? variablesAreProvided(sql, variables) : true;
+
+		if (typeof variablesAreProvidedResult === "string") {
+			throw new TypeError(`Invalid query arguments: ${variablesAreProvidedResult}`);
+		} else {
 			const { sqlWithValues, paramaters } = determineSQLAndParams(sql, variables);
 
 			if (IS_DEVELOPMENT && log?.sql) {
@@ -38,7 +42,5 @@ export const query =
 			}
 
 			return parsedResult;
-		} else {
-			throw new TypeError("Invalid query arguments");
 		}
 	};
