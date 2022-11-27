@@ -1,13 +1,15 @@
 import { readFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
 
 import { getResultExists } from "../get-result-exists";
 import { QueryOptionsLog, query } from "../query";
 import { PoolOrClient } from "../types";
 
-const SELECT_EXISTS = await readFile(join(dirname(import.meta.url), "select-exists.sql").slice(5), {
-	encoding: "utf8",
-});
+const importSQL = (folderName: string) => (filename: string) => {
+	const url = new URL(`${filename}.sql`, folderName);
+	return readFile(url, "utf8");
+};
+
+const SELECT_EXISTS = await importSQL(import.meta.url)("select-exists");
 
 export interface ExistsOptionsBase extends QueryOptionsLog {
 	table: string;
@@ -27,7 +29,7 @@ const existsQuery =
 			variables: {
 				table,
 				column,
-				value: [value, [null, true]],
+				value: [value, [false, true]],
 			},
 		});
 
