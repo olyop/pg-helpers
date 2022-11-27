@@ -40,8 +40,16 @@ const normalizeInput = <T>(
 								return {
 									key,
 									value: isValueArray ? value[0] : value,
-									surroundStringWithCommas: isValueArray ? value[1][0] || undefined : undefined,
-									parameterized: isValueArray ? value[1][1] || undefined : undefined,
+									surroundStringWithCommas: isValueArray
+										? value[1][0] === null
+											? undefined
+											: value[1][0]
+										: undefined,
+									parameterized: isValueArray
+										? value[1][1] === null
+											? undefined
+											: value[1][1]
+										: undefined,
 								};
 							},
 					  )),
