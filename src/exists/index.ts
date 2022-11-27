@@ -1,12 +1,15 @@
 import { readFile } from "node:fs/promises";
+import path, { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { getResultExists } from "../get-result-exists";
 import { QueryOptionsLog, query } from "../query";
 import { PoolOrClient } from "../types";
 
-const importSQL = (folderName: string) => (filename: string) => {
-	const url = new URL(`${filename}.sql`, folderName);
-	return readFile(url, "utf8");
+export const importSQL = (importMetaURL: string) => (filename: string) => {
+	const folderPath = dirname(fileURLToPath(importMetaURL));
+	const filePath = path.join(folderPath, `${filename}.sql`);
+	return readFile(filePath, "utf8");
 };
 
 const SELECT_EXISTS = await importSQL(import.meta.url)("select-exists");
