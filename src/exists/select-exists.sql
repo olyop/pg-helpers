@@ -5,4 +5,4 @@ SELECT EXISTS (
 		{{ table }}
 	WHERE
 		{{ column }} = {{ value }}
-)
+);

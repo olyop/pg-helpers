@@ -15,7 +15,7 @@ const determineSQLAndParams = (sql: string, variables?: Variable[]) => {
 
 				if (parameterized) {
 					paramaters.push(value);
-					return `$${paramaters.length}`;
+					computedValue = `$${paramaters.length}`;
 				} else {
 					if (isUndefined(value) || isNull(value)) {
 						computedValue = "NULL";
