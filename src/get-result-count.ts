@@ -1,4 +1,4 @@
 import { getResultRows } from "./get-result-rows";
-import { Result, RowCount } from "./types";
+import { Result, Row } from "./types";
 
-export const getResultCount = (result: Result<RowCount>) => getResultRows(result)[0]?.count || 0;
+export const getResultCount = (result: Result<Row>) => getResultRows(result)[0]?.count || 0;

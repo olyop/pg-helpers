@@ -1,7 +1,7 @@
 import pgMinify, { IMinifyOptions } from "pg-minify";
 
 import { IS_DEVELOPMENT } from "./globals";
-import { PoolOrClient, RowBase, VariableType } from "./types";
+import { PoolOrClient, Row, VariableType } from "./types";
 
 export class DatabaseError extends Error {
 	constructor() {
@@ -17,7 +17,7 @@ const MINIFY_OPTIONS: IMinifyOptions = {
 export const baseQuery = (pg: PoolOrClient) => async (sql: string, paramaters?: VariableType[]) => {
 	try {
 		const sqlMinified = pgMinify(sql, MINIFY_OPTIONS);
-		return await pg.query<RowBase>(sqlMinified, paramaters);
+		return await pg.query<Row>(sqlMinified, paramaters);
 	} catch (error) {
 		if (IS_DEVELOPMENT) {
 			throw error;

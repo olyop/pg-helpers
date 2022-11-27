@@ -1,5 +1,4 @@
 import { getResultRows } from "./get-result-rows";
-import { Result, RowExists } from "./types";
+import { Result, Row } from "./types";
 
-export const getResultExists = (result: Result<RowExists>) =>
-	getResultRows(result)[0]?.exists || false;
+export const getResultExists = (result: Result<Row>) => getResultRows(result)[0]?.exists || false;
