@@ -1,16 +1,7 @@
-import { readFile } from "node:fs/promises";
-import path, { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-
 import { getResultExists } from "../get-result-exists";
+import { importSQL } from "../import-sql";
 import { QueryOptionsLog, query } from "../query";
 import { PoolOrClient } from "../types";
-
-export const importSQL = (importMetaURL: string) => (filename: string) => {
-	const folderPath = dirname(fileURLToPath(importMetaURL));
-	const filePath = path.join(folderPath, `${filename}.sql`);
-	return readFile(filePath, "utf8");
-};
 
 const SELECT_EXISTS = await importSQL(import.meta.url)("select-exists");
 
@@ -25,9 +16,9 @@ export interface ExistsQueryOptions extends ExistsOptionsBase {
 
 const existsQuery =
 	(client: PoolOrClient) =>
-	({ log, table, column, value }: ExistsQueryOptions) =>
+	({ table, column, value, ...log }: ExistsQueryOptions) =>
 		query(client)(SELECT_EXISTS)({
-			log,
+			...log,
 			parse: getResultExists,
 			variables: {
 				table: [table, [false]],

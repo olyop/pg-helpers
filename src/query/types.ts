@@ -2,33 +2,37 @@ import { Result, VariableType } from "../types";
 
 export type SQLInput = string | Buffer;
 
-export interface Variable {
+interface VariableRequired {
 	key: string;
 	value: VariableType;
-	parameterized?: boolean;
-	surroundStringWithCommas?: boolean;
 }
 
-export type VariableInputRecordValue =
-	| VariableType
-	| [
-			value: VariableType,
-			options: [surroundStringWithCommas: boolean | null, parameterized?: boolean | null],
-	  ];
+interface VariableOptions {
+	parameterized: boolean;
+	surroundStringWithCommas: boolean;
+}
 
-export type VariableInput = Variable[] | Record<string, VariableInputRecordValue>;
+export interface Variable extends VariableRequired, VariableOptions {}
+
+interface VariableOptional extends VariableRequired, Partial<VariableOptions> {}
+
+type VariableInputRecordValueArray = [
+	value: VariableType,
+	options?: [surroundStringWithCommas: boolean | null, parameterized?: boolean],
+];
+
+export type VariableInputRecordValue = VariableType | VariableInputRecordValueArray;
+
+export type VariableInput = VariableOptional[] | Record<string, VariableInputRecordValue>;
 
 export type Parse<T> = (result: Result) => T;
 
-export interface QueryLog {
-	sql?: boolean;
-	result?: boolean;
-	variables?: boolean;
-	parsedResult?: boolean;
-}
-
 export interface QueryOptionsLog {
-	log?: QueryLog;
+	logSql: boolean;
+	logParsedSql: boolean;
+	logResult: boolean;
+	logVariables: boolean;
+	logParsedResult: boolean;
 }
 
 export interface QueryOptionsParse<T> {
@@ -36,10 +40,15 @@ export interface QueryOptionsParse<T> {
 }
 
 export interface QueryOptionsVariables<V> {
-	variables?: V;
+	variables: V;
 }
 
-export interface QueryOptions<T>
+export interface QueryOptionsNormalized<T>
 	extends QueryOptionsLog,
+		QueryOptionsParse<T>,
+		QueryOptionsVariables<Variable[]> {}
+
+export interface QueryOptions<T>
+	extends Partial<QueryOptionsLog>,
 		Partial<QueryOptionsParse<T>>,
-		QueryOptionsVariables<VariableInput> {}
+		Partial<QueryOptionsVariables<VariableInput>> {}

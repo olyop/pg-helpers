@@ -8,17 +8,13 @@ const checkIfVariableIsProvided =
 	({ key, value }: Variable) =>
 		!isUndefined(value) && keys.has(key);
 
-const variablesAreProvided = (sql: string, variables?: Variable[]) => {
-	if (isUndefined(variables)) {
+const variablesAreProvided = (sql: string, variables: Variable[]) => {
+	const keys = getVariableKeys(sql);
+	const areVariablesProvided = variables.map(checkIfVariableIsProvided(keys)).every(Boolean);
+	if (areVariablesProvided) {
 		return true;
 	} else {
-		const keys = getVariableKeys(sql);
-		const areVariablesProvided = variables.map(checkIfVariableIsProvided(keys)).every(Boolean);
-		if (areVariablesProvided) {
-			return true;
-		} else {
-			return keys.toString();
-		}
+		return keys.toString();
 	}
 };
 

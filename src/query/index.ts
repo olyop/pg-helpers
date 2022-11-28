@@ -1,20 +1,31 @@
+import pgMinify, { IMinifyOptions } from "pg-minify";
+
 import { baseQuery } from "../base-query";
 import { IS_DEVELOPMENT } from "../globals";
 import { PoolOrClient } from "../types";
 import determineSQLAndParams from "./determine-sql-and-params";
-import normalizeInput from "./normalize-input";
+import normalizeOptions from "./normalize-options";
 import { QueryOptions, SQLInput } from "./types";
 import variablesAreProvided from "./variables-are-provided";
 
 export * from "./types";
 
-export const query =
-	(pg: PoolOrClient) =>
-	(sqlInput: SQLInput) =>
-	async <T>(input?: QueryOptions<T>) => {
-		const { sql, log, parse, variables } = normalizeInput(sqlInput, input);
+const MINIFY_OPTIONS: IMinifyOptions = {
+	removeAll: true,
+	compress: !IS_DEVELOPMENT,
+};
 
-		if (IS_DEVELOPMENT && log?.variables) {
+export const query = (pg: PoolOrClient) => (sqlInput: SQLInput) => {
+	const sqlAsString = sqlInput.toString();
+	const sql = pgMinify(sqlAsString, MINIFY_OPTIONS);
+	return async <T>(input?: QueryOptions<T>) => {
+		const { parse, variables, ...log } = normalizeOptions(input);
+
+		if (IS_DEVELOPMENT && log.logSql) {
+			console.log(sqlAsString);
+		}
+
+		if (IS_DEVELOPMENT && log.logVariables) {
 			console.log(variables);
 		}
 
@@ -25,22 +36,23 @@ export const query =
 		} else {
 			const { sqlWithValues, paramaters } = determineSQLAndParams(sql, variables);
 
-			if (IS_DEVELOPMENT && log?.sql) {
+			if (IS_DEVELOPMENT && log.logParsedSql) {
 				console.log(sqlWithValues);
 			}
 
 			const result = await baseQuery(pg)(sqlWithValues, paramaters);
 
-			if (IS_DEVELOPMENT && log?.result) {
+			if (IS_DEVELOPMENT && log.logResult) {
 				console.log(result);
 			}
 
 			const parsedResult = parse(result);
 
-			if (IS_DEVELOPMENT && log?.parsedResult) {
+			if (IS_DEVELOPMENT && log.logParsedResult) {
 				console.log(parsedResult);
 			}
 
 			return parsedResult;
 		}
 	};
+};

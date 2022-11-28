@@ -20,4 +20,4 @@ export interface Row extends RowSum, RowCount, RowExists, RowBase {}
 
 export type Result<T extends Row = Row> = ResultBase<T>;
 
-export type VariableType = string | number | boolean | null | undefined;
+export type VariableType = string[] | string | number | boolean | null | undefined;
