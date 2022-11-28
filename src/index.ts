@@ -4,6 +4,7 @@ export * from "./query";
 export * from "./exists";
 export * from "./unique";
 export * from "./import-sql";
+export * from "./add-prefix";
 export * from "./bulk-insert";
 export * from "./transaction";
 export * from "./is-result-empty";
