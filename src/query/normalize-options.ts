@@ -68,7 +68,7 @@ const normalizeOptions = <T>(options?: QueryOptions<T>): QueryOptionsNormalized<
 								} else {
 									value = inputValueArrayValue;
 
-									if (!isUndefined(inputValueArrayOptions)) {
+									if (!isUndefined(inputValueArrayOptions) && isArray(inputValueArrayOptions)) {
 										const inputValueArrayOptionsSurroundString = inputValueArrayOptions[0];
 										const inputValueArrayOptionsParamaterized = inputValueArrayOptions[1];
 

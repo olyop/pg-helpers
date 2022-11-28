@@ -2,7 +2,7 @@
 	"type": "module",
 	"types": "build",
 	"license": "MIT",
-	"version": "7.0.21",
+	"version": "7.0.22",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",

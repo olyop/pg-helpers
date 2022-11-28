@@ -21,9 +21,9 @@ const existsQuery =
 			...log,
 			parse: getResultExists,
 			variables: {
-				table: [table, [false]],
-				column: [column, [false]],
-				value: [value, [false, true]],
+				table: [table],
+				column: [column],
+				value: [value, [null, true]],
 			},
 		});
 
