@@ -23,7 +23,7 @@ type VariableInputRecordValueArray = [
 
 export type VariableInputRecordValue = VariableType | VariableInputRecordValueArray;
 
-export type VariableInput = VariableOptional[] | Record<string, VariableInputRecordValue>;
+export type VariablesInput = VariableOptional[] | Record<string, VariableInputRecordValue>;
 
 export type Parse<T> = (result: Result) => T;
 
@@ -51,4 +51,4 @@ export interface QueryOptionsNormalized<T>
 export interface QueryOptions<T>
 	extends Partial<QueryOptionsLog>,
 		Partial<QueryOptionsParse<T>>,
-		Partial<QueryOptionsVariables<VariableInput>> {}
+		Partial<QueryOptionsVariables<VariablesInput>> {}
