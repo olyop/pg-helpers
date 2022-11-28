@@ -1,4 +1,3 @@
-export * from "./join";
 export * from "./types";
 export * from "./query";
 export * from "./exists";

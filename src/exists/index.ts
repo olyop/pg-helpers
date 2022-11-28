@@ -5,7 +5,7 @@ import { PoolOrClient } from "../types";
 
 const SELECT_EXISTS = await importSQL(import.meta.url)("select-exists");
 
-export interface ExistsOptionsBase extends QueryOptionsLog {
+export interface ExistsOptionsBase extends Partial<QueryOptionsLog> {
 	table: string;
 	column: string;
 }
