@@ -69,15 +69,15 @@ const normalizeOptions = <T>(options?: QueryOptions<T>): QueryOptionsNormalized<
 									value = inputValueArrayValue;
 
 									if (!isUndefined(inputValueArrayOptions) && isArray(inputValueArrayOptions)) {
-										const inputValueArrayOptionsSurroundString = inputValueArrayOptions[0];
-										const inputValueArrayOptionsParamaterized = inputValueArrayOptions[1];
+										const inputValueArrayOptionsParamaterized = inputValueArrayOptions[0];
+										const inputValueArrayOptionsSurroundString = inputValueArrayOptions[1];
 
-										if (!isNull(inputValueArrayOptionsSurroundString)) {
-											surroundStringWithCommas = inputValueArrayOptionsSurroundString;
+										if (!isNull(inputValueArrayOptionsParamaterized)) {
+											parameterized = inputValueArrayOptionsParamaterized;
 										}
 
-										if (!isUndefined(inputValueArrayOptionsParamaterized)) {
-											parameterized = inputValueArrayOptionsParamaterized;
+										if (!isUndefined(inputValueArrayOptionsSurroundString)) {
+											surroundStringWithCommas = inputValueArrayOptionsSurroundString;
 										}
 									}
 								}
