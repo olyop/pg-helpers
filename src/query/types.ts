@@ -16,9 +16,14 @@ export interface Variable extends VariableRequired, VariableOptions {}
 
 interface VariableOptional extends VariableRequired, Partial<VariableOptions> {}
 
+type VariableInputRecordValueArrayOptions = [
+	parameterized: boolean | null,
+	surroundStringWithCommas?: boolean,
+];
+
 type VariableInputRecordValueArray = [
 	value: VariableType,
-	options?: [parameterized: boolean | null, surroundStringWithCommas?: boolean],
+	options?: VariableInputRecordValueArrayOptions,
 ];
 
 export type VariableInputRecordValue = VariableType | VariableInputRecordValueArray;

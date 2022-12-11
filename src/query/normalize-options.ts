@@ -1,6 +1,7 @@
-import { isNull, isString } from "lodash-es";
 import identity from "lodash-es/identity";
 import isArray from "lodash-es/isArray";
+import isBoolean from "lodash-es/isBoolean";
+import isNull from "lodash-es/isNull";
 import isUndefined from "lodash-es/isUndefined";
 
 import { VariableType } from "../types";
@@ -45,17 +46,22 @@ const normalizeOptions = <T>(options?: QueryOptions<T>): QueryOptionsNormalized<
 				? []
 				: isArray(options.variables)
 				? options.variables.map<Variable>(
-						({ key, value, parameterized, surroundStringWithCommas }) => ({
+						({
 							key,
 							value,
-							parameterized: parameterized || PARAMATERIZED_DEFAULT,
-							surroundStringWithCommas:
-								surroundStringWithCommas || SURROUND_STRING_WITH_COMMAS_DEFAULT,
+							parameterized = PARAMATERIZED_DEFAULT,
+							surroundStringWithCommas = SURROUND_STRING_WITH_COMMAS_DEFAULT,
+						}) => ({
+							key,
+							value,
+							parameterized,
+							surroundStringWithCommas,
 						}),
 				  )
 				: Object.entries<VariableInputRecordValue>(options.variables).map<Required<Variable>>(
 						([key, inputValue]) => {
 							let value: VariableType;
+
 							let surroundStringWithCommas: boolean = SURROUND_STRING_WITH_COMMAS_DEFAULT;
 							let parameterized: boolean = PARAMATERIZED_DEFAULT;
 
@@ -63,23 +69,25 @@ const normalizeOptions = <T>(options?: QueryOptions<T>): QueryOptionsNormalized<
 								const inputValueArrayValue = inputValue[0];
 								const inputValueArrayOptions = inputValue[1];
 
-								if (isString(inputValueArrayOptions)) {
+								if (
+									inputValueArrayOptions &&
+									isArray(inputValueArrayOptions) &&
+									(isNull(inputValueArrayOptions[0]) || isBoolean(inputValueArrayOptions[0]))
+								) {
 									value = inputValueArrayValue;
+
+									const inputValueArrayOptionsParamaterized = inputValueArrayOptions[0];
+									const inputValueArrayOptionsSurroundString = inputValueArrayOptions[1];
+
+									if (!isNull(inputValueArrayOptionsParamaterized)) {
+										parameterized = inputValueArrayOptionsParamaterized;
+									}
+
+									if (!isUndefined(inputValueArrayOptionsSurroundString)) {
+										surroundStringWithCommas = inputValueArrayOptionsSurroundString;
+									}
 								} else {
 									value = inputValueArrayValue;
-
-									if (!isUndefined(inputValueArrayOptions) && isArray(inputValueArrayOptions)) {
-										const inputValueArrayOptionsParamaterized = inputValueArrayOptions[0];
-										const inputValueArrayOptionsSurroundString = inputValueArrayOptions[1];
-
-										if (!isNull(inputValueArrayOptionsParamaterized)) {
-											parameterized = inputValueArrayOptionsParamaterized;
-										}
-
-										if (!isUndefined(inputValueArrayOptionsSurroundString)) {
-											surroundStringWithCommas = inputValueArrayOptionsSurroundString;
-										}
-									}
 								}
 							} else {
 								value = inputValue;

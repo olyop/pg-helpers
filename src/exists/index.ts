@@ -23,7 +23,7 @@ const existsQuery =
 			variables: {
 				table: [table],
 				column: [column],
-				value: [value, [null, true]],
+				value: [value, [true]],
 			},
 		});
 
