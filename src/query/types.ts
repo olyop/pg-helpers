@@ -2,33 +2,35 @@ import { Result, VariableType } from "../types";
 
 export type SQLInput = string | Buffer;
 
-interface VariableRequired {
+export interface VariableRequired {
 	key: string;
 	value: VariableType;
 }
 
-interface VariableOptions {
+export interface VariableOptions {
 	parameterized: boolean;
 	surroundStringWithCommas: boolean;
 }
 
 export interface Variable extends VariableRequired, VariableOptions {}
 
-interface VariableOptional extends VariableRequired, Partial<VariableOptions> {}
+export interface VariableOptional extends VariableRequired, Partial<VariableOptions> {}
 
-type VariableInputRecordValueArrayOptions = [
+export type VariableInputRecordValueArrayOptions = [
 	parameterized: boolean | null,
 	surroundStringWithCommas?: boolean,
 ];
 
-type VariableInputRecordValueArray = [
-	value: VariableType,
+export type VariableInputRecordValueArray = [
+	value: Exclude<VariableType, string[]>,
 	options?: VariableInputRecordValueArrayOptions,
 ];
 
 export type VariableInputRecordValue = VariableType | VariableInputRecordValueArray;
 
-export type VariablesInput = VariableOptional[] | Record<string, VariableInputRecordValue>;
+export type VariableInputRecord = Record<string, VariableInputRecordValue>;
+
+export type VariablesInput = VariableOptional[] | VariableInputRecord;
 
 export type Parse<T> = (result: Result) => T;
 
