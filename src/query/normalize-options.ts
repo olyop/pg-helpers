@@ -66,20 +66,17 @@ const normalizeOptionsVariablesRecord = (variables: VariableInputRecord): Variab
 						const inputValueArrayOptionsParameterized = inputValueOptions[0];
 						const inputValueArrayOptionsSurroundString = inputValueOptions[1];
 
-						if (isNull(inputValueArrayOptionsParameterized)) {
-							parameterized = PARAMATERIZED_DEFAULT;
-						} else {
+						if (!isNull(inputValueArrayOptionsParameterized)) {
 							parameterized = inputValueArrayOptionsParameterized;
 						}
 
 						if (isUndefined(inputValueArrayOptionsSurroundString)) {
-							surroundStringWithCommas = SURROUND_STRING_WITH_COMMAS_DEFAULT;
+							surroundStringWithCommas = false;
 						} else {
 							surroundStringWithCommas = inputValueArrayOptionsSurroundString;
 						}
 					} else {
-						parameterized = PARAMATERIZED_DEFAULT;
-						surroundStringWithCommas = SURROUND_STRING_WITH_COMMAS_DEFAULT;
+						surroundStringWithCommas = false;
 					}
 
 					value = inputValueValue;
