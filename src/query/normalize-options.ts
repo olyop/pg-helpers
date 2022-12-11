@@ -1,6 +1,7 @@
 import identity from "lodash-es/identity";
 import isArray from "lodash-es/isArray";
 import isNull from "lodash-es/isNull";
+import isString from "lodash-es/isString";
 import isUndefined from "lodash-es/isUndefined";
 
 import { VariableType } from "../types";
@@ -47,7 +48,7 @@ const isVariableInputRecordValueArray = (
 ): input is VariableInputRecordValueArray =>
 	isArray(input) &&
 	(input.length === 1 || input.length === 2) &&
-	(input.length === 1 ? true : isArray(input[1]));
+	(isString(input[0]) || (isString(input[0]) && isArray(input[1])));
 
 const normalizeOptionsVariablesRecord = (variables: VariableInputRecord): Variable[] =>
 	Object.entries<VariableInputRecordValue>(variables).map<Required<Variable>>(
