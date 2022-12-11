@@ -44,11 +44,11 @@ const normalizeOptionsVariablesArray = (variables: VariableOptional[]): Variable
 	);
 
 const isVariableInputRecordValueArray = (
-	input: VariableInputRecordValue,
+	input: string[] | VariableInputRecordValueArray,
 ): input is VariableInputRecordValueArray =>
-	isArray(input) &&
 	(input.length === 1 || input.length === 2) &&
-	(isString(input[0]) || (isString(input[0]) && isArray(input[1])));
+	(isString(input[0] && isUndefined(input[1])) ||
+		(isString(input[0]) && !isUndefined(input[1]) && isArray(input[1])));
 
 const normalizeOptionsVariablesRecord = (variables: VariableInputRecord): Variable[] =>
 	Object.entries<VariableInputRecordValue>(variables).map<Required<Variable>>(
@@ -59,6 +59,8 @@ const normalizeOptionsVariablesRecord = (variables: VariableInputRecord): Variab
 			let surroundStringWithCommas: boolean = SURROUND_STRING_WITH_COMMAS_DEFAULT;
 
 			if (isArray(inputValue)) {
+				surroundStringWithCommas = false;
+
 				if (isVariableInputRecordValueArray(inputValue)) {
 					const inputValueValue = inputValue[0];
 					const inputValueOptions = inputValue[1];
@@ -71,13 +73,9 @@ const normalizeOptionsVariablesRecord = (variables: VariableInputRecord): Variab
 							parameterized = inputValueArrayOptionsParameterized;
 						}
 
-						if (isUndefined(inputValueArrayOptionsSurroundString)) {
-							surroundStringWithCommas = false;
-						} else {
+						if (!isUndefined(inputValueArrayOptionsSurroundString)) {
 							surroundStringWithCommas = inputValueArrayOptionsSurroundString;
 						}
-					} else {
-						surroundStringWithCommas = false;
 					}
 
 					value = inputValueValue;
