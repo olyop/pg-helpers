@@ -83,7 +83,9 @@ const normalizeOptions = <T>(options?: QueryOptions<T>): QueryOptionsNormalized<
 										parameterized = inputValueArrayOptionsParamaterized;
 									}
 
-									if (!isUndefined(inputValueArrayOptionsSurroundString)) {
+									if (isUndefined(inputValueArrayOptionsSurroundString)) {
+										surroundStringWithCommas = false;
+									} else {
 										surroundStringWithCommas = inputValueArrayOptionsSurroundString;
 									}
 								} else {
