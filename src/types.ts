@@ -5,15 +5,15 @@ export type PoolOrClient = Pool | PoolClient | Client;
 export type RowBase = Record<string, unknown>;
 
 export interface RowSum extends RowBase {
-	sum: number;
+	sum: string;
 }
 
 export interface RowCount extends RowBase {
-	count: number;
+	count: string;
 }
 
 export interface RowExists extends RowBase {
-	exists: boolean;
+	exists: string;
 }
 
 export interface Row extends RowSum, RowCount, RowExists, RowBase {}
