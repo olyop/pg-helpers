@@ -5,7 +5,7 @@ export const getResultExists = (result: Result<Row>) => {
 	const rows = getResultRows(result);
 	const firstRow = rows[0];
 	if (firstRow) {
-		return firstRow.exists === "true";
+		return firstRow.exists;
 	} else {
 		return false;
 	}

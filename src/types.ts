@@ -13,7 +13,7 @@ export interface RowCount extends RowBase {
 }
 
 export interface RowExists extends RowBase {
-	exists: string;
+	exists: boolean;
 }
 
 export interface Row extends RowSum, RowCount, RowExists, RowBase {}
