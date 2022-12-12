@@ -18,8 +18,8 @@ const MINIFY_OPTIONS: IMinifyOptions = {
 export const query = (pg: PoolOrClient) => (sqlInput: SQLInput) => {
 	const sqlAsString = sqlInput.toString();
 	const sql = pgMinify(sqlAsString, MINIFY_OPTIONS);
-	return async <T>(input?: QueryOptions<T>) => {
-		const { parse, variables, ...log } = normalizeOptions(input);
+	return async <T = void>(input?: QueryOptions<T>) => {
+		const { parse, variables, ...log } = normalizeOptions<T>(input);
 
 		if (IS_DEVELOPMENT && log.logSql) {
 			console.log(sqlAsString);
