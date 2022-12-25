@@ -1,7 +1,7 @@
-import snakeCase from "lodash-es/snakeCase";
+import { snakeCase } from "lodash-es";
 
-import { baseQuery } from "./base-query";
-import { PoolOrClient, VariableType } from "./types";
+import { baseQuery } from "./base-query.js";
+import { PoolOrClient, VariableType } from "./types.js";
 
 export const bulkInsert =
 	(pg: PoolOrClient) =>

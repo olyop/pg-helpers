@@ -1,7 +1,7 @@
 import pgMinify, { IMinifyOptions } from "pg-minify";
 
-import { IS_DEVELOPMENT } from "./globals";
-import { PoolOrClient, Row, VariableType } from "./types";
+import { IS_DEVELOPMENT } from "./globals.js";
+import { PoolOrClient, Row, VariableType } from "./types.js";
 
 export class DatabaseError extends Error {
 	constructor() {

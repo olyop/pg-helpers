@@ -1,7 +1,7 @@
-import { getResultExists } from "../get-result-exists";
-import { importSQL } from "../import-sql";
-import { QueryOptionsLog, query } from "../query";
-import { PoolOrClient } from "../types";
+import { getResultExists } from "../get-result-exists.js";
+import { importSQL } from "../import-sql.js";
+import { QueryOptionsLog, query } from "../query/index.js";
+import { PoolOrClient } from "../types.js";
 
 const SELECT_EXISTS = await importSQL(import.meta.url)("select-exists");
 

@@ -1,7 +1,7 @@
-import isUndefined from "lodash-es/isUndefined";
+import { isUndefined } from "lodash-es";
 
-import { getResultRows } from "./get-result-rows";
-import { Result, Row } from "./types";
+import { getResultRows } from "./get-result-rows.js";
+import { Result, Row } from "./types.js";
 
 export const getResultSum = (result: Result<Row>) => {
 	const rows = getResultRows(result);

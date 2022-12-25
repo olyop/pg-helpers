@@ -1,10 +1,6 @@
-import identity from "lodash-es/identity";
-import isArray from "lodash-es/isArray";
-import isNull from "lodash-es/isNull";
-import isString from "lodash-es/isString";
-import isUndefined from "lodash-es/isUndefined";
+import { identity, isArray, isNull, isString, isUndefined } from "lodash-es";
 
-import { VariableType } from "../types";
+import { VariableType } from "../types.js";
 import {
 	Parse,
 	QueryOptions,
@@ -15,7 +11,7 @@ import {
 	VariableInputRecordValue,
 	VariableInputRecordValueArray,
 	VariableOptional,
-} from "./types";
+} from "./types.js";
 
 const LOG_OPTIONS_DEFAULT: Required<QueryOptionsLog> = {
 	logParsedResult: false,

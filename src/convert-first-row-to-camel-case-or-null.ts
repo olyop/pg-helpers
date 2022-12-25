@@ -1,6 +1,6 @@
-import { convertFirstRowToCamelCase } from "./convert-first-row-to-camel-case";
-import { getResultRowCount } from "./get-result-row-count";
-import { Result } from "./types";
+import { convertFirstRowToCamelCase } from "./convert-first-row-to-camel-case.js";
+import { getResultRowCount } from "./get-result-row-count.js";
+import { Result } from "./types.js";
 
 export const convertFirstRowToCamelCaseOrNull =
 	<T>() =>

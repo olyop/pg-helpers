@@ -1,7 +1,7 @@
-import isUndefined from "lodash-es/isUndefined";
+import { isUndefined } from "lodash-es";
 
-import getVariableKeys from "./get-variable-keys";
-import { Variable } from "./types";
+import getVariableKeys from "./get-variable-keys.js";
+import { Variable } from "./types.js";
 
 const checkIfVariableIsProvided =
 	(keys: Set<string>) =>

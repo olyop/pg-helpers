@@ -1,5 +1,5 @@
-import { ExistsQueryOptions, exists } from "./exists";
-import { PoolOrClient } from "./types";
+import { ExistsQueryOptions, exists } from "./exists/index.js";
+import { PoolOrClient } from "./types.js";
 
 type IsUniqueOptions = ExistsQueryOptions;
 

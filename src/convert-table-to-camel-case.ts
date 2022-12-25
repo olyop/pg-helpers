@@ -1,6 +1,6 @@
-import { convertRowToCamelCase } from "./convert-row-to-camel-case";
-import { getResultRows } from "./get-result-rows";
-import { Result } from "./types";
+import { convertRowToCamelCase } from "./convert-row-to-camel-case.js";
+import { getResultRows } from "./get-result-rows.js";
+import { Result } from "./types.js";
 
 export const convertTableToCamelCase =
 	<T>() =>

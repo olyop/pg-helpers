@@ -1,5 +1,5 @@
-import { getResultRowCount } from "./get-result-row-count";
-import { Result } from "./types";
+import { getResultRowCount } from "./get-result-row-count.js";
+import { Result } from "./types.js";
 
 export const getResultRowCountOrNull = (result: Result) => {
 	const rowCount = getResultRowCount(result);

@@ -1,9 +1,7 @@
-import "node:path";
-
 import { isArray, isBoolean, isNull, isString, isUndefined } from "lodash-es";
 
-import { VariableType } from "../types";
-import { Variable } from "./types";
+import { VariableType } from "../types.js";
+import { Variable } from "./types.js";
 
 const determineSQLAndParams = (sql: string, variables?: Variable[]) => {
 	const paramaters: VariableType[] = [];

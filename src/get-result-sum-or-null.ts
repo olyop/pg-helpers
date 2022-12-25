@@ -1,5 +1,5 @@
-import { getResultSum } from "./get-result-sum";
-import { Result, Row } from "./types";
+import { getResultSum } from "./get-result-sum.js";
+import { Result, Row } from "./types.js";
 
 export const getResultSumOrNull = (result: Result<Row>) => {
 	const sum = getResultSum(result);

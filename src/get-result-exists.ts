@@ -1,5 +1,5 @@
-import { getResultRows } from "./get-result-rows";
-import { Result, Row } from "./types";
+import { getResultRows } from "./get-result-rows.js";
+import { Result, Row } from "./types.js";
 
 export const getResultExists = (result: Result<Row>) => {
 	const rows = getResultRows(result);

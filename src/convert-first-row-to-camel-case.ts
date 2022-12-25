@@ -1,14 +1,14 @@
-import head from "lodash-es/head";
+import { head } from "lodash-es";
 
-import { convertRowToCamelCase } from "./convert-row-to-camel-case";
-import { getResultRows } from "./get-result-rows";
-import { Result } from "./types";
+import { convertRowToCamelCase } from "./convert-row-to-camel-case.js";
+import { getResultRows } from "./get-result-rows.js";
+import { Result } from "./types.js";
 
 export const convertFirstRowToCamelCase =
 	<T>() =>
 	(result: Result) => {
 		const rows = getResultRows(result);
-		const firstRow = head(rows);
+		const firstRow = head<T>(rows);
 		if (firstRow) {
 			return convertRowToCamelCase<T>()(firstRow);
 		} else {

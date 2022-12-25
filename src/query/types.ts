@@ -1,4 +1,4 @@
-import { Result, VariableType } from "../types";
+import { Result, VariableType } from "../types.js";
 
 export type SQLInput = string | Buffer;
 
