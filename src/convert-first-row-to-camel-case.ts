@@ -8,7 +8,7 @@ export const convertFirstRowToCamelCase =
 	<T>() =>
 	(result: Result) => {
 		const rows = getResultRows(result);
-		const firstRow = head<T>(rows);
+		const firstRow = head(rows);
 		if (firstRow) {
 			return convertRowToCamelCase<T>()(firstRow);
 		} else {

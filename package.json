@@ -2,7 +2,7 @@
 	"type": "module",
 	"types": "build",
 	"license": "MIT",
-	"version": "7.0.33",
+	"version": "7.1.0",
 	"main": "build/index.js",
 	"description": "pg-helpers",
 	"name": "@oly_op/pg-helpers",
@@ -64,7 +64,7 @@
 		"pg-minify": "1.6.2"
 	},
 	"volta": {
-		"node": "19.2.0",
+		"node": "19.3.0",
 		"npm": "9.2.0"
 	}
 }

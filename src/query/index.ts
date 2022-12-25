@@ -1,14 +1,14 @@
 import pgMinify, { IMinifyOptions } from "pg-minify";
 
-import { baseQuery } from "../base-query";
-import { IS_DEVELOPMENT } from "../globals";
-import { PoolOrClient } from "../types";
-import determineSQLAndParams from "./determine-sql-and-params";
-import normalizeOptions from "./normalize-options";
-import { QueryOptions, SQLInput } from "./types";
-import variablesAreProvided from "./variables-are-provided";
+import { baseQuery } from "../base-query.js";
+import { IS_DEVELOPMENT } from "../globals.js";
+import { PoolOrClient } from "../types.js";
+import determineSQLAndParams from "./determine-sql-and-params.js";
+import normalizeOptions from "./normalize-options.js";
+import { QueryOptions, SQLInput } from "./types.js";
+import variablesAreProvided from "./variables-are-provided.js";
 
-export * from "./types";
+export * from "./types.js";
 
 const MINIFY_OPTIONS: IMinifyOptions = {
 	removeAll: true,
