@@ -14,10 +14,10 @@ const MINIFY_OPTIONS: IMinifyOptions = {
 	compress: !IS_DEVELOPMENT,
 };
 
-export const baseQuery = (pg: PoolOrClient) => async (sql: string, paramaters?: VariableType[]) => {
+export const baseQuery = (pg: PoolOrClient) => (sql: string, paramaters?: VariableType[]) => {
 	try {
 		const sqlMinified = pgMinify(sql, MINIFY_OPTIONS);
-		return await pg.query<Row>(sqlMinified, paramaters);
+		return pg.query<Row>(sqlMinified, paramaters);
 	} catch (error) {
 		if (IS_DEVELOPMENT) {
 			throw error;
