@@ -1,5 +1,3 @@
-import pgMinify, { IMinifyOptions } from "pg-minify";
-
 import { baseQuery } from "../base-query.js";
 import { IS_DEVELOPMENT } from "../globals.js";
 import { PoolOrClient } from "../types.js";
@@ -10,20 +8,10 @@ import variablesAreProvided from "./variables-are-provided.js";
 
 export * from "./types.js";
 
-const MINIFY_OPTIONS: IMinifyOptions = {
-	removeAll: true,
-	compress: !IS_DEVELOPMENT,
-};
-
 export const query = (pg: PoolOrClient) => (sqlInput: SQLInput) => {
-	const sqlAsString = sqlInput.toString();
-	const sql = pgMinify(sqlAsString, MINIFY_OPTIONS);
+	const sql = sqlInput.toString();
 	return async <T = void>(input?: QueryOptions<T>) => {
 		const { parse, variables, ...log } = normalizeOptions<T>(input);
-
-		if (IS_DEVELOPMENT && log.logSql) {
-			console.log(sqlAsString);
-		}
 
 		if (IS_DEVELOPMENT && log.logVariables) {
 			console.log(variables);
@@ -41,7 +29,7 @@ export const query = (pg: PoolOrClient) => (sqlInput: SQLInput) => {
 			console.log(sqlWithValues);
 		}
 
-		const result = await baseQuery(pg)(sqlWithValues, paramaters);
+		const result = await baseQuery(pg)(sqlWithValues, paramaters, log.logSql);
 
 		if (IS_DEVELOPMENT && log.logResult) {
 			console.log(result);
